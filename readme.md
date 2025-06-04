@@ -94,18 +94,25 @@ Total: 129,00
 ## 🗂 Estrutura do Projeto
 
 ```
-📁 src/
- ┣ 📜 main.cpp
- ┣ 📜 vendas.cpp / .h
- ┣ 📜 produtos.cpp / .h
- ┗ 📜 lista_itens.cpp / .h
-```
-
+📁 include/ — Headers do projeto (.h)
+ ┗ 📚 sales.ch
+🗃️ src/ - Código-fonte principal (.cpp)
+ ┗ 🔧 sales.cpp
+🧪 tests/ — Arquivos de teste
+ ┣ 📄 5_produtos.txt
+ ┣ 📄 20_produtos.txt
+ ┗ 📄 100_produtos.txt
+ 
+💻 main.cpp
+``` 
 ---
 
 ## 👨‍🏫 Informações Acadêmicas
 ```
 Nome(s): Paulo Henrique Rodrigues Corrêa           
 Disciplina: Algoritmos e Programação II            
-Professora:                                         
+Professora: Graziela Santos de Araujo                                         
 ```
+## Tarefas
+- Receber os N dados do arquivo.
+  - [ ] y

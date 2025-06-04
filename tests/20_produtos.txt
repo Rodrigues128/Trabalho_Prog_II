@@ -1,0 +1,100 @@
+20
+1010
+Arroz
+5.25
+100
+
+1011
+Feijão
+6.90
+80
+
+1012
+Macarrão
+3.45
+120
+
+1013
+Óleo de Soja
+7.30
+60
+
+1014
+Açúcar
+4.10
+95
+
+1015
+Café
+10.50
+70
+
+1016
+Farinha de Trigo
+4.75
+85
+
+1017
+Leite Integral
+5.99
+130
+
+1018
+Achocolatado
+8.40
+50
+
+1019
+Molho de Tomate
+2.99
+110
+
+1020
+Sabonete
+1.50
+200
+
+1021
+Shampoo
+12.99
+45
+
+1022
+Papel Higiênico
+9.80
+90
+
+1023
+Detergente
+2.25
+150
+
+1024
+Amaciante
+7.90
+60
+
+1025
+Escova de Dente
+3.99
+75
+
+1026
+Creme Dental
+4.30
+85
+
+1027
+Esponja de Aço
+2.10
+140
+
+1028
+Biscoito Recheado
+3.50
+100
+
+1029
+Refrigerante 2L
+6.75
+65
