@@ -1,8 +1,16 @@
+#include <stdio.h>
+
+// Constants
+#define TAM_NAME_ARQ 50
+#define TAM_MAX_NAME 50
+#define TAM_MAX_CPF 11
+
 // Structs
+
 // Date type
 struct date
 {
-    int year; 
+    int year;
     int month;
     int day;
 };
@@ -16,20 +24,21 @@ struct time
 };
 
 // Type Itens sold
-struct product {
-    char code[4];
+struct product
+{
+    int code;
+    char name[TAM_MAX_NAME];
     float price;
-    int qty_sold;
+    int qty;
 };
 
-struct sale {
+struct sale
+{
     date sale_date;
     time sale_time;
-    char CPF[11];
+    char CPF[TAM_MAX_CPF];
     product itens_sold[];
-
 };
-
 
 // Prototypes
 void register_sale();
@@ -39,5 +48,9 @@ void list_sales_by_date();
 void change_product_stock_and_price();
 
 void remove_product_from_stock();
+
+void open_file(char name_arq[], FILE **p, int *qty_products, product **products);
+
+void opening_option(char name_arq[], FILE **p, int *qty_products, product **products);
 
 int menu(int option);

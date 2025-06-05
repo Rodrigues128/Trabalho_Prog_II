@@ -115,4 +115,7 @@ Professora: Graziela Santos de Araujo
 ```
 ## Tarefas
 - Receber os N dados do arquivo.
-  - [ ] y
+  - [x] Puxar os dados do arquivo e salvar em um vetor contendo todos os produtos;
+  - [x] Verificar se a abertura do arquivo está correta;
+  - [x] Verificar se o nome do arquivo passado pelo usuário existe;
+  - [x] Verificar se o usuário quer carregar um arquivo ou digitar as entradas manualmente.
