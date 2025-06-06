@@ -50,10 +50,10 @@ void remove_product_from_stock();
 // Auxiliary functions
 
 // Functions for opening the file
-void open_file(char name_arq[], FILE **p, int *qty_products,
+void open_file(char name_arq[], int *qty_products,
                product **products);
 
-void opening_option(char name_arq[], FILE **p, int *qty_products,
+void opening_option(char name_arq[], int *qty_products,
                     product **products);
 
 // Functions for sorting
