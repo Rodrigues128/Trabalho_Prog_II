@@ -57,7 +57,7 @@ Feijão Sabiá
 
 ### 🔧 Compilação (com GCC):
 ```bash
-g++ -Wall main.cpp -o supermercado
+gcc -Wall main.cpp src\sales.cpp -o debug/out
 ```
 
 > Certifique-se de que todos os arquivos `.cpp` e `.h` estejam no mesmo diretório ao compilar.
@@ -114,8 +114,21 @@ Disciplina: Algoritmos e Programação II
 Professora: Graziela Santos de Araujo                                         
 ```
 ## Tarefas
-- Receber os N dados do arquivo.
+- Passo 1: Receber os N dados do arquivo.
   - [x] Puxar os dados do arquivo e salvar em um vetor contendo todos os produtos;
   - [x] Verificar se a abertura do arquivo está correta;
   - [x] Verificar se o nome do arquivo passado pelo usuário existe;
   - [x] Verificar se o usuário quer carregar um arquivo ou digitar as entradas manualmente.
+  - [x] Ordenar o vetor de produtos;
+
+- Passo 2: Cadastrar Venda
+  - [ ] ...
+
+- Passo 3: Listar vendas por data
+  - [ ] ...
+
+- Passo 4: Alterar estoque e preço de produto
+    - [ ] ...
+
+- Passo 5: Remover produto do estoque
+  - [ ] ...
