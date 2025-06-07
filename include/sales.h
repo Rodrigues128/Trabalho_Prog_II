@@ -28,18 +28,22 @@ struct product {
   int qty;
 };
 
+struct itens {
+  product *itens_sold;
+  struct itens *prox;
+};
+
 // Sale type
 struct sale {
   date sale_date;
   time sale_time;
   char CPF[TAM_MAX_CPF];
-  product itens_sold[];
 };
 
 // Prototypes
 
 // Features
-void register_sale();
+bool register_sale(product *products, int qty_products);
 
 void list_sales_by_date();
 
@@ -50,15 +54,15 @@ void remove_product_from_stock();
 // Auxiliary functions
 
 // Functions for opening the file
-void open_file(char name_arq[], int *qty_products,
-               product **products);
-
-void opening_option(char name_arq[], int *qty_products,
-                    product **products);
+void open_file(char name_arq[], int *qty_products, product **products);
+void opening_option(char name_arq[], int *qty_products, product **products);
 
 // Functions for sorting
 void marge(int p, int q, int r, product *products);
-
 void marg_sort(int p, int r, product *products);
 
-int menu(int option);
+// Functions for sales registration
+void list_stock_products(product *products, int qty_products);
+int find_product(product *products, int code, int qty_products);
+void genarete_code();
+int menu(int option, product *products, int qty_products);

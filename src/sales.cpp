@@ -4,7 +4,52 @@
 #include <string.h>
 
 // Features
-void register_sale() {}
+bool register_sale(product *products, int qty_products) {
+  // Lista todos os procutos que estão dispiníveis no estoque
+  list_stock_products(products, qty_products);
+  sale sales;
+
+  int code, qty, index, op;
+
+  printf("Infome os seguintes dados:");
+  printf("\tData: %d %d %d", &sales.sale_date.year, &sales.sale_date.month,
+         &sales.sale_date.day);
+  printf("\tHora: %d %d %d", &sales.sale_time.h, &sales.sale_time.m,
+         &sales.sale_time.s);
+  printf("\tCPF: %[^\n]", sales.CPF);
+
+  printf("Informe o codigo e a quatidade do produto:\n");
+  printf("Resposta: ");
+  scanf("%d %d", &code, &qty);
+
+  index = find_product(products, code, qty_products);
+
+  printf("\n%d\n", products[index].qty);
+  if (qty > products[index].qty) {
+    printf("Esse produto temos somente %d unidades em estoque.\n",
+           products[index].qty);
+    printf("Deseja comprar todas as unidades existentes:");
+    printf("\n\t[1] - Sim\n\t[2] - Nao\n");
+    printf("Sua resposta: ");
+    scanf("%d", &op);
+
+    if (op == 1)
+      products[index].qty = 0;
+    else {
+      printf("Deseja comprar outro produto:\n");
+      printf("\t[1] - Sim\n");
+      printf("\t[2] - Nao\n");
+      printf("\tSua resposta: ");
+      scanf("%d", &op);
+
+      if (op == 2)
+        return false;
+    }
+  } else {
+    products[index].qty = products[index].qty - qty;
+  }
+  return true;
+}
 
 void list_sales_by_date() { printf("Entrou em 2"); }
 
@@ -52,18 +97,18 @@ void opening_option(char name_arq[], int *qty_products, product **products) {
   int arq, choise; // arq = escolha do arquivo existente na pasta de tests
                    // choise = escolha da onde quer carregar o arquivo
   printf("O que deseja fazer:\n");
-  printf("[1] - Carregar um arquivo ja existente\n");
-  printf("[2] - Carregar um novo arquivo\n");
-  printf("Sua resposta: ");
+  printf("\t[1] - Carregar um arquivo ja existente\n");
+  printf("\t[2] - Carregar um novo arquivo\n");
+  printf("\tSua resposta: ");
   scanf("%d", &choise);
 
   if (choise == 1) {
     do {
       printf("Qual arquivo deseja carregar:\n");
-      printf("[1] - 5 Produtos\n");
-      printf("[2] - 20 Produtos\n");
-      printf("[3] - 100 Produtos\n");
-      printf("Sua resposta: ");
+      printf("\t[1] - 5 Produtos\n");
+      printf("\t[2] - 20 Produtos\n");
+      printf("\t[3] - 100 Produtos\n");
+      printf("\tSua resposta: ");
       scanf("%d", &arq);
 
       switch (arq) {
@@ -93,11 +138,10 @@ void opening_option(char name_arq[], int *qty_products, product **products) {
       ; // limpa o buffer após scanf
 
     fgets(name_arq_aux, TAM_NAME_ARQ, stdin);
-    name_arq[strcspn(name_arq, "\n")] = '\0';
+    name_arq_aux[strcspn(name_arq_aux, "\n")] = '\0';
 
     strcpy(name_arq, "tests/");
     strcat(name_arq, name_arq_aux);
-
     open_file(name_arq, qty_products, products);
   } else {
     printf("Opcao invalida! Insira o valor novamente [1, 2]\n");
@@ -105,6 +149,7 @@ void opening_option(char name_arq[], int *qty_products, product **products) {
   }
 }
 
+// Functions for sorting
 void marge(int p, int q, int r, product *products) {
   int i, j, k;
   product aux[r - p];
@@ -149,20 +194,21 @@ void marg_sort(int p, int r, product *products) {
 }
 
 // Functions for sales registration
-int menu(int option) {
-  // Variáveis para abertura do arquivo
-  char name_arq[TAM_NAME_ARQ];
-  int qty_products = 0;
+void list_stock_products(product *products, int qty_products) {
+  for (int i = 0; i < qty_products; i++) {
+    printf("%d, %s, %.2f\n", products[i].code, products[i].name,
+           products[i].price);
+  }
+}
 
-  // Variavéis que vão ser usadas em todo código
-  product *products = NULL;
+int find_product(product *products, int code, int qty_products) {
+  for (int i = 0; i < qty_products; i++)
+    if (products[i].code == code)
+      return i;
+  return -1;
+}
 
-  // Opção para abertura do arquivo
-  opening_option(name_arq, &qty_products, &products);
-
-  // Ordenando o vetor de produtos
-  marg_sort(0, qty_products, products);
-
+int menu(int option, product *products, int qty_products) {
   printf("[1] Cadastrar venda \n");
   printf("[2] Listar vendas por data \n");
   printf("[3] Alterar estoque e preço de produto \n");
@@ -173,7 +219,8 @@ int menu(int option) {
 
   switch (option) {
   case 1:
-    register_sale();
+    while (register_sale(products, qty_products))
+      ;
     break;
 
   case 2:

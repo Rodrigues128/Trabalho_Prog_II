@@ -122,7 +122,11 @@ Professora: Graziela Santos de Araujo
   - [x] Ordenar o vetor de produtos;
 
 - Passo 2: Cadastrar Venda
-  - [ ] ...
+  - [ ] Listar produtos existentes no estoque
+  - [ ] Receber o código e a quatidade de produtos do usuário
+  - [ ] Verificar
+  - [ ] t
+  - [ ] e
 
 - Passo 3: Listar vendas por data
   - [ ] ...
