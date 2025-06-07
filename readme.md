@@ -57,13 +57,15 @@ Feijão Sabiá
 
 ### 🔧 Compilação (com GCC):
 ```bash
-gcc -Wall main.cpp src\sales.cpp -o debug/out
+if not exist output mkdir output && gcc -Wall main.cpp src\sales.cpp -o output/out, se for no cmd
+if (!(Test-Path -Path "output")) { New-Item -ItemType Directory -Path "output" }
+gcc -Wall main.cpp src/sales.cpp -o output/out, se for no PowerShell
 ```
 
 > Certifique-se de que todos os arquivos `.cpp` e `.h` estejam no mesmo diretório ao compilar.
 
 ### ▶️ Execução:
-```bash
+```power
 ./supermercado
 ```
 
@@ -122,11 +124,9 @@ Professora: Graziela Santos de Araujo
   - [x] Ordenar o vetor de produtos;
 
 - Passo 2: Cadastrar Venda
-  - [ ] Listar produtos existentes no estoque
-  - [ ] Receber o código e a quatidade de produtos do usuário
-  - [ ] Verificar
-  - [ ] t
-  - [ ] e
+  - [x] Listar produtos existentes no estoque
+  - [x] Função para pegar a data e a hora da venda
+  - [ ] Receber código e quatidade de produtos que ele deseja comprar
 
 - Passo 3: Listar vendas por data
   - [ ] ...

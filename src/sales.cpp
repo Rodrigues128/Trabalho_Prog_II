@@ -2,54 +2,55 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 // Features
 bool register_sale(product *products, int qty_products) {
+  sale sales;
   // Lista todos os procutos que estão dispiníveis no estoque
   list_stock_products(products, qty_products);
-  sale sales;
+
+  // Pegando a data e a hora atual da venda
+  get_date_hour(sales.sale_date, sales.sale_time);
 
   int code, qty, index, op;
-  system("date /t");
-  system("date /t");
 
-  printf("Infome os seguintes dados:");
-  scanf("\tData: %d %d %d", &sales.sale_date.year, &sales.sale_date.month,
-         &sales.sale_date.day);
-  scanf("\tHora: %d %d %d", &sales.sale_time.h, &sales.sale_time.m,
-          &sales.sale_time.s);
-   scanf("\tCPF: %[^\n]", sales.CPF);
+  printf("Infome os seguintes dados:\n");
+  printf("\tCPF: ");
+  scanf(" %[^\n]", sales.CPF);
+
+  printf("%s", sales.CPF);
+  format_CPF(sales.CPF);
 
   printf("Informe o codigo e a quatidade do produto:\n");
   printf("Resposta: ");
   scanf("%d %d", &code, &qty);
 
+  // Está devolvendo a quantidade errada de produtos disponíveus no estoque
   index = find_product(products, code, qty_products);
+  // if (qty > products[index].qty) {
+  //   printf("Esse produto temos somente %d unidades em estoque.\n",
+  //          products[index].qty);
+  //   printf("Deseja comprar todas as unidades existentes:");
+  //   printf("\n\t[1] - Sim\n\t[2] - Nao\n");
+  //   printf("Sua resposta: ");
+  //   scanf("%d", &op);
 
-  printf("\n%d\n", products[index].qty);
-  if (qty > products[index].qty) {
-    printf("Esse produto temos somente %d unidades em estoque.\n",
-           products[index].qty);
-    printf("Deseja comprar todas as unidades existentes:");
-    printf("\n\t[1] - Sim\n\t[2] - Nao\n");
-    printf("Sua resposta: ");
-    scanf("%d", &op);
+  //   if (op == 1)
+  //     products[index].qty = 0;
+  //   else {
+  //     printf("Deseja comprar outro produto:\n");
+  //     printf("\t[1] - Sim\n");
+  //     printf("\t[2] - Nao\n");
+  //     printf("\tSua resposta: ");
+  //     scanf("%d", &op);
 
-    if (op == 1)
-      products[index].qty = 0;
-    else {
-      printf("Deseja comprar outro produto:\n");
-      printf("\t[1] - Sim\n");
-      printf("\t[2] - Nao\n");
-      printf("\tSua resposta: ");
-      scanf("%d", &op);
-
-      if (op == 2)
-        return false;
-    }
-  } else {
-    products[index].qty = products[index].qty - qty;
-  }
+  //     if (op == 2)
+  //       return false;
+  //   }
+  // } else {
+  //   products[index].qty = products[index].qty - qty;
+  // }
   return true;
 }
 
@@ -210,14 +211,25 @@ int find_product(product *products, int code, int qty_products) {
   return -1;
 }
 
+void get_date_hour(char date[], char hour[]) {
+  time_t t;
+  struct tm *tm_info;
+
+  time(&t);                // pega o tempo atual
+  tm_info = localtime(&t); // converte para hora local
+
+  strftime(date, TAM_DATE, "%Y/%m/%d", tm_info);
+  strftime(hour, TAM_HOURS, "%H:%M:%S", tm_info);
+}
+
 void format_CPF(char cpf[]) {
   // se na posição 3 e 7 tiver . e na posição 11 tiver - o cpf está formatado
-  // caso contrário tem que formatar
+  //  caso contrário tem que formatar
   int i = 0;
   char cpf_formated[TAM_MAX_CPF];
-  for(i; i < 3; i++){
-    strcpy(cpf_formated, cpf[i]);
-  }
+  // for (i = 0; i < 3; i++) {
+  //   strcpy(cpf[i]);
+  // }
 }
 
 int menu(int option, product *products, int qty_products) {
