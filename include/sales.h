@@ -3,7 +3,8 @@
 // Constants
 #define TAM_NAME_ARQ 50
 #define TAM_MAX_NAME 50
-#define TAM_MAX_CPF 11
+#define TAM_MAX_CPF 15
+
 
 // Structs/New variable types
 // Date type
@@ -64,5 +65,5 @@ void marg_sort(int p, int r, product *products);
 // Functions for sales registration
 void list_stock_products(product *products, int qty_products);
 int find_product(product *products, int code, int qty_products);
-void genarete_code();
+
 int menu(int option, product *products, int qty_products);

@@ -10,13 +10,15 @@ bool register_sale(product *products, int qty_products) {
   sale sales;
 
   int code, qty, index, op;
+  system("date /t");
+  system("date /t");
 
   printf("Infome os seguintes dados:");
-  printf("\tData: %d %d %d", &sales.sale_date.year, &sales.sale_date.month,
+  scanf("\tData: %d %d %d", &sales.sale_date.year, &sales.sale_date.month,
          &sales.sale_date.day);
-  printf("\tHora: %d %d %d", &sales.sale_time.h, &sales.sale_time.m,
-         &sales.sale_time.s);
-  printf("\tCPF: %[^\n]", sales.CPF);
+  scanf("\tHora: %d %d %d", &sales.sale_time.h, &sales.sale_time.m,
+          &sales.sale_time.s);
+   scanf("\tCPF: %[^\n]", sales.CPF);
 
   printf("Informe o codigo e a quatidade do produto:\n");
   printf("Resposta: ");
@@ -206,6 +208,16 @@ int find_product(product *products, int code, int qty_products) {
     if (products[i].code == code)
       return i;
   return -1;
+}
+
+void format_CPF(char cpf[]) {
+  // se na posição 3 e 7 tiver . e na posição 11 tiver - o cpf está formatado
+  // caso contrário tem que formatar
+  int i = 0;
+  char cpf_formated[TAM_MAX_CPF];
+  for(i; i < 3; i++){
+    strcpy(cpf_formated, cpf[i]);
+  }
 }
 
 int menu(int option, product *products, int qty_products) {
