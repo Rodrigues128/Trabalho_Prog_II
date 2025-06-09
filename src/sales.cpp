@@ -5,53 +5,45 @@
 #include <time.h>
 
 // Features
-bool register_sale(product *products, int qty_products) {
+void register_sale(product *products, int qty_products) {
   sale sales;
+  int code, qty, op, index;
+  bool stop = false;
+
   // Lista todos os procutos que estão dispiníveis no estoque
   list_stock_products(products, qty_products);
 
-  // Pegando a data e a hora atual da venda
-  get_date_hour(sales.sale_date, sales.sale_time);
+  // Pega os dados do usuário
+  get_data(products, qty_products, &sales);
 
-  int code, qty, index, op;
+  while (!stop) {
+    printf("Informe o codigo e a quatidade do produto:\n");
+    printf("Resposta: ");
+    scanf("%d %d", &code, &qty);
 
-  printf("Infome os seguintes dados:\n");
-  printf("\tCPF: ");
-  scanf(" %[^\n]", sales.CPF);
+    // Está devolvendo a quantidade errada de produtos disponíveus no estoque
+    index = find_product(products, code, qty_products);
 
-  printf("%s", sales.CPF);
-  format_CPF(sales.CPF);
+    if (index == -1) {
+      printf("Produto não encontrado.\n");
+    }
 
-  printf("Informe o codigo e a quatidade do produto:\n");
-  printf("Resposta: ");
-  scanf("%d %d", &code, &qty);
+    if (qty > products[index].qty) {
+      printf("Esse produto tem apenas %d unidades em estoque.\n",
+             products[index].qty);
+      printf("Deseja comprar todas as unidades?\n\t[1] - Sim\n\t[2] - Não\n");
+      scanf("%d", &op);
 
-  // Está devolvendo a quantidade errada de produtos disponíveus no estoque
-  index = find_product(products, code, qty_products);
-  // if (qty > products[index].qty) {
-  //   printf("Esse produto temos somente %d unidades em estoque.\n",
-  //          products[index].qty);
-  //   printf("Deseja comprar todas as unidades existentes:");
-  //   printf("\n\t[1] - Sim\n\t[2] - Nao\n");
-  //   printf("Sua resposta: ");
-  //   scanf("%d", &op);
-
-  //   if (op == 1)
-  //     products[index].qty = 0;
-  //   else {
-  //     printf("Deseja comprar outro produto:\n");
-  //     printf("\t[1] - Sim\n");
-  //     printf("\t[2] - Nao\n");
-  //     printf("\tSua resposta: ");
-  //     scanf("%d", &op);
-
-  //     if (op == 2)
-  //       return false;
-  //   }
-  // } else {
-  //   products[index].qty = products[index].qty - qty;
-  // }
-  return true;
+      if (op == 1) {
+        sales.itens_sold.itens.code = code;
+        sales.itens_sold.itens.price = products[index].price;
+        sales.itens_sold.itens.qty = products[index].qty;
+        products[index].qty = 0;
+      }
+    } else {
+      products[index].qty -= qty;
+    }
+  }
 }
 
 void list_sales_by_date() { printf("Entrou em 2"); }
@@ -61,41 +53,7 @@ void change_product_stock_and_price() { printf("Entrou em 3"); }
 void remove_product_from_stock() { printf("Entrou em 4"); };
 
 // Auxiliary functions
-
 // File opening functions
-void open_file(char name_arq[], int *qty_products, product **products) {
-  FILE *p = fopen(name_arq, "r");
-
-  if (p == NULL) {
-    printf("Erro na  abertura do arquivo! Tente novamente!\n");
-    opening_option(name_arq, qty_products, products);
-  } else {
-    fscanf(p, "%d", qty_products);
-    *products = (product *)calloc(*qty_products, sizeof(product));
-
-    if (products == NULL) {
-      printf("Erro ao alocar memória!\n");
-      fclose(p);
-      return;
-    }
-
-    // Salvando os dados do arquivo no vertor de produtos
-    for (int i = 0; i < *qty_products; i++) {
-      fscanf(p, "%d", &(*products)[i].code);
-      fgetc(p); // limpa o '\n' depois do número
-
-      fgets((*products)[i].name, TAM_MAX_NAME, p);
-      (*products)[i].name[strcspn((*products)[i].name, "\n")] =
-          '\0'; // remove '\n'
-
-      fscanf(p, "%f", &(*products)[i].price);
-      fscanf(p, "%d", &(*products)[i].qty);
-      fgetc(p); // consome o '\n' após estoque ou linha em branco
-    }
-  }
-  fclose(p);
-}
-
 void opening_option(char name_arq[], int *qty_products, product **products) {
   int arq, choise; // arq = escolha do arquivo existente na pasta de tests
                    // choise = escolha da onde quer carregar o arquivo
@@ -152,6 +110,39 @@ void opening_option(char name_arq[], int *qty_products, product **products) {
   }
 }
 
+void open_file(char name_arq[], int *qty_products, product **products) {
+  FILE *p = fopen(name_arq, "r");
+
+  if (p == NULL) {
+    printf("Erro na  abertura do arquivo! Tente novamente!\n");
+    opening_option(name_arq, qty_products, products);
+  } else {
+    fscanf(p, "%d", qty_products);
+    *products = (product *)calloc(*qty_products, sizeof(product));
+
+    if (products == NULL) {
+      printf("Erro ao alocar memória!\n");
+      fclose(p);
+      return;
+    }
+
+    // Salvando os dados do arquivo no vertor de produtos
+    for (int i = 0; i < *qty_products; i++) {
+      fscanf(p, "%d", &(*products)[i].code);
+      fgetc(p); // limpa o '\n' depois do número
+
+      fgets((*products)[i].name, TAM_MAX_NAME, p);
+      (*products)[i].name[strcspn((*products)[i].name, "\n")] =
+          '\0'; // remove '\n'
+
+      fscanf(p, "%f", &(*products)[i].price);
+      fscanf(p, "%d", &(*products)[i].qty);
+      fgetc(p); // consome o '\n' após estoque ou linha em branco
+    }
+  }
+  fclose(p);
+}
+
 // Functions for sorting
 void marge(int p, int q, int r, product *products) {
   int i, j, k;
@@ -197,6 +188,20 @@ void marg_sort(int p, int r, product *products) {
 }
 
 // Functions for sales registration
+bool get_data(product *products, int qty_products, sale *sales) {
+  // Pegando a data e a hora atual da venda
+  get_date_hour(sales->sale_date, sales->sale_time);
+
+  printf("Infome os seguintes dados:\n");
+  printf("\tCPF (Somente números): ");
+  scanf(" %[^\n]", sales->CPF);
+  if (strlen(sales->CPF) != 11) {
+    get_data(products, qty_products, sales);
+  }
+  format_CPF(sales->CPF);
+  return false;
+}
+
 void list_stock_products(product *products, int qty_products) {
   for (int i = 0; i < qty_products; i++) {
     printf("%d, %s, %.2f\n", products[i].code, products[i].name,
@@ -223,13 +228,10 @@ void get_date_hour(char date[], char hour[]) {
 }
 
 void format_CPF(char cpf[]) {
-  // se na posição 3 e 7 tiver . e na posição 11 tiver - o cpf está formatado
-  //  caso contrário tem que formatar
-  int i = 0;
   char cpf_formated[TAM_MAX_CPF];
-  // for (i = 0; i < 3; i++) {
-  //   strcpy(cpf[i]);
-  // }
+  snprintf(cpf_formated, TAM_MAX_CPF, "%.3s.%.3s.%.3s-%.2s", cpf, cpf + 3,
+           cpf + 6, cpf + 9);
+  strcpy(cpf, cpf_formated);
 }
 
 int menu(int option, product *products, int qty_products) {
@@ -243,8 +245,7 @@ int menu(int option, product *products, int qty_products) {
 
   switch (option) {
   case 1:
-    while (register_sale(products, qty_products))
-      ;
+    register_sale(products, qty_products);
     break;
 
   case 2:

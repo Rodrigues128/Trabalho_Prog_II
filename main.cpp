@@ -17,8 +17,7 @@ int main() {
   // Ordenando o vetor de produtos
   marg_sort(0, qty_products, products);
 
-  while (menu(option, products, qty_products) != 5)
-    ;
+  while (menu(option, products, qty_products) != 5);
 
   return 0;
 }

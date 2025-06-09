@@ -3,10 +3,9 @@
 // Constants
 #define TAM_NAME_ARQ 50
 #define TAM_MAX_NAME 50
-#define TAM_MAX_CPF 15 
-#define TAM_DATE 11 //yyyy/mm/dd + '\0'
-#define TAM_HOURS 9 //12:51:11 + '\0
-
+#define TAM_MAX_CPF 15
+#define TAM_DATE 11 // yyyy/mm/dd + '\0'
+#define TAM_HOURS 9 // 12:51:11 + '\0
 
 // Structs/New variable types
 // Type Itens sold
@@ -17,9 +16,15 @@ struct product {
   int qty;
 };
 
-struct itens {
-  product *itens_sold;
-  struct itens *prox;
+struct product_sale {
+  int code;
+  float price;
+  int qty;
+};
+
+struct celula {
+  product_sale itens;
+  struct celula *prox;
 };
 
 // Sale type
@@ -27,13 +32,13 @@ struct sale {
   char sale_date[TAM_DATE];
   char sale_time[TAM_HOURS];
   char CPF[TAM_MAX_CPF];
-  itens *v;
+  celula itens_sold;
 };
 
 // Prototypes
 
 // Features
-bool register_sale(product *products, int qty_products);
+void register_sale(product *products, int qty_products);
 
 void list_sales_by_date();
 
@@ -52,6 +57,7 @@ void marge(int p, int q, int r, product *products);
 void marg_sort(int p, int r, product *products);
 
 // Functions for sales registration
+bool get_data(product *products, int qty_products, sale *sales);
 void list_stock_products(product *products, int qty_products);
 int find_product(product *products, int code, int qty_products);
 void get_date_hour(char date[], char hour[]);
