@@ -7,42 +7,49 @@
 // Features
 void register_sale(product *products, int qty_products) {
   sale sales;
-  int code, qty, op, index;
+  celula *lst = sales.itens_sold.prox = NULL;
+  int code, qty, op, index, choise, i = 0;
   bool stop = false;
 
-  // Lista todos os procutos que estão dispiníveis no estoque
+  // Lista todos os produtos que estão disponíveis no estoque
   list_stock_products(products, qty_products);
 
   // Pega os dados do usuário
   get_data(products, qty_products, &sales);
-
+  
+  printf("\n=-=-= COMPRA DE PRODUTOS =-=-=\n");
   while (!stop) {
-    printf("Informe o codigo e a quatidade do produto:\n");
-    printf("Resposta: ");
-    scanf("%d %d", &code, &qty);
-
-    // Está devolvendo a quantidade errada de produtos disponíveus no estoque
+    i++;
+    printf("Dados da compra do produto [%d]", i);
+    printf("Informe o codigo do produto: ");
+    scanf("%d", &code);
+    printf("Informe a quantidade do produto");
+    scanf("%d", &qty);
+    
+    // Busca o indice que o produto está no vetor de products
     index = find_product(products, code, qty_products);
 
-    if (index == -1) {
-      printf("Produto não encontrado.\n");
-    }
-
-    if (qty > products[index].qty) {
-      printf("Esse produto tem apenas %d unidades em estoque.\n",
-             products[index].qty);
-      printf("Deseja comprar todas as unidades?\n\t[1] - Sim\n\t[2] - Não\n");
+    if (index == -1)
+      printf("Produto nao encontrado.\n");
+    
+    if(qty > products[index].qty) {
+      printf("A quatidade desejada excede o quatidade em estoque!");
+      printf("\nDeseja comprar a quatidade que tem no estoque? 1 - sim ou 2 - nao.");
+      printf("\nEscolha: ");
       scanf("%d", &op);
 
-      if (op == 1) {
-        sales.itens_sold.itens.code = code;
-        sales.itens_sold.itens.price = products[index].price;
-        sales.itens_sold.itens.qty = products[index].qty;
-        products[index].qty = 0;
+      if(op == 1){
+        insert(products, index, lst);
       }
-    } else {
-      products[index].qty -= qty;
     }
+    else {
+      insert(products, index, lst);   
+      printf("Compra realizada com SUCESSO.\n");
+    }
+    printf("Deseja continuar comprando? 1 - sim ou 2 - nao.\nEscolha: ");
+    scanf("%d\n", &choise);
+    if (choise == 2)
+      return;
   }
 }
 
@@ -57,19 +64,13 @@ void remove_product_from_stock() { printf("Entrou em 4"); };
 void opening_option(char name_arq[], int *qty_products, product **products) {
   int arq, choise; // arq = escolha do arquivo existente na pasta de tests
                    // choise = escolha da onde quer carregar o arquivo
-  printf("O que deseja fazer:\n");
-  printf("\t[1] - Carregar um arquivo ja existente\n");
-  printf("\t[2] - Carregar um novo arquivo\n");
-  printf("\tSua resposta: ");
+  printf("\n=-=-= Bem-vindo ao Sistema de Vendas do Supermercado Produtos++ =-=-=");
+  printf("\n\nO que deseja fazer:\n\t[1] - Carregar um arquivo ja existente\n\t[2] - Carregar um novo arquivo\n\tEscolha: ");
   scanf("%d", &choise);
 
   if (choise == 1) {
     do {
-      printf("Qual arquivo deseja carregar:\n");
-      printf("\t[1] - 5 Produtos\n");
-      printf("\t[2] - 20 Produtos\n");
-      printf("\t[3] - 100 Produtos\n");
-      printf("\tSua resposta: ");
+      printf("\nQual arquivo deseja carregar:\n\t[1] - 5 Produtos\n\t[2] - 20 Produtos\n\t[3] - 100 Produtos\n\tEscolha: ");
       scanf("%d", &arq);
 
       switch (arq) {
@@ -121,7 +122,7 @@ void open_file(char name_arq[], int *qty_products, product **products) {
     *products = (product *)calloc(*qty_products, sizeof(product));
 
     if (products == NULL) {
-      printf("Erro ao alocar memória!\n");
+      printf("Erro ao alocar memoria!\n");
       fclose(p);
       return;
     }
@@ -192,8 +193,7 @@ bool get_data(product *products, int qty_products, sale *sales) {
   // Pegando a data e a hora atual da venda
   get_date_hour(sales->sale_date, sales->sale_time);
 
-  printf("Infome os seguintes dados:\n");
-  printf("\tCPF (Somente números): ");
+  printf("\nInforme o CPF (Somente numeros): ");
   scanf(" %[^\n]", sales->CPF);
   if (strlen(sales->CPF) != 11) {
     get_data(products, qty_products, sales);
@@ -203,6 +203,7 @@ bool get_data(product *products, int qty_products, sale *sales) {
 }
 
 void list_stock_products(product *products, int qty_products) {
+  printf("\n=-=-= Lista de Produtos =-=-=\n");
   for (int i = 0; i < qty_products; i++) {
     printf("%d, %s, %.2f\n", products[i].code, products[i].name,
            products[i].price);
@@ -234,13 +235,21 @@ void format_CPF(char cpf[]) {
   strcpy(cpf, cpf_formated);
 }
 
+void insert(product *products, int index, celula *lst){
+    celula *novo;
+
+    novo = (celula*) calloc(1, sizeof(celula));
+    novo->itens.code = products[index].code;
+    novo->itens.price = products[index].price;
+    novo->itens.qty = products[index].qty;
+    novo->prox = lst;
+}
+
+
 int menu(int option, product *products, int qty_products) {
-  printf("[1] Cadastrar venda \n");
-  printf("[2] Listar vendas por data \n");
-  printf("[3] Alterar estoque e preço de produto \n");
-  printf("[4] Remover produto do estoque\n");
-  printf("[5] Sair\n");
-  printf("Sua resposta: ");
+  printf("\n=-=-= MENU =-=-=\n");
+  printf("[1] Cadastrar venda\n[2] Listar vendas por data\n[3] Alterar estoque e preco de produto\n");
+  printf("[4] Remover produto do estoque\n[5] Sair\nEscolha: ");
   scanf("%d", &option);
 
   switch (option) {
