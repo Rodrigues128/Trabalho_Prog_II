@@ -7,9 +7,11 @@
 // Features
 void register_sale(product *products, int qty_products) {
   sale sales;
-  celula *lst = sales.itens_sold.prox = NULL;
   int code, qty, op, index, choise, i = 0;
   bool stop = false;
+
+  // Inicializando a babeça de produtos vendidos
+  celula *lst = sales.itens_sold.prox = NULL;
 
   // Lista todos os produtos que estão disponíveis no estoque
   list_stock_products(products, qty_products);
@@ -51,6 +53,7 @@ void register_sale(product *products, int qty_products) {
       break;
     }
   }
+  purchase_value(&lst);
 }
 
 void list_sales_by_date() { printf("Entrou em 2"); }
@@ -247,6 +250,16 @@ void insert(product *products, int index, celula **lst, int qty) {
   novo->itens.qty = qty;
   novo->prox = *lst;
   *lst = novo;
+}
+
+void purchase_value(celula **lst) {
+  float soma = 0;
+
+  for (celula *p = *lst; p != NULL; p = p->prox) {
+    soma += p->itens.price * p->itens.qty;
+  }
+
+  printf("\nSoma: %.2f\n", soma);
 }
 
 int menu(int option, product *products, int qty_products) {

@@ -24,10 +24,10 @@ As vendas são armazenadas em um vetor, cada uma contendo uma **lista encadeada 
 ## 📑 Menu de opções
 
 ```text
-[1] Cadastrar Venda  
-[2] Listar vendas por data  
-[3] Alterar estoque e preço de produto  
-[4] Remover produto do estoque  
+[1] Cadastrar Venda
+[2] Listar vendas por data
+[3] Alterar estoque e preço de produto
+[4] Remover produto do estoque
 [5] Sair
 ```
 
@@ -56,6 +56,7 @@ Feijão Sabiá
 ## 💻 Execução
 
 ### 🔧 Compilação (com GCC):
+
 ```bash
 if not exist output mkdir output && gcc -Wall main.cpp src\sales.cpp -o output/out, se for no cmd
 if (!(Test-Path -Path "output")) { New-Item -ItemType Directory -Path "output" }
@@ -65,6 +66,7 @@ gcc -Wall main.cpp src/sales.cpp -o output/out, se for no PowerShell
 > Certifique-se de que todos os arquivos `.cpp` e `.h` estejam no mesmo diretório ao compilar.
 
 ### ▶️ Execução:
+
 ```power
 ./supermercado
 ```
@@ -104,19 +106,24 @@ Total: 129,00
  ┣ 📄 5_produtos.txt
  ┣ 📄 20_produtos.txt
  ┗ 📄 100_produtos.txt
- 
+
 💻 main.cpp
-``` 
+```
+
 ---
 
 ## 👨‍🏫 Informações Acadêmicas
+
 ```
-Nome(s): Paulo Henrique Rodrigues Corrêa           
-Disciplina: Algoritmos e Programação II            
-Professora: Graziela Santos de Araujo                                         
+Nome(s): Paulo Henrique Rodrigues Corrêa
+Disciplina: Algoritmos e Programação II
+Professora: Graziela Santos de Araujo
 ```
+
 ## Tarefas
+
 - Passo 1: Receber os N dados do arquivo.
+
   - [x] Puxar os dados do arquivo e salvar em um vetor contendo todos os produtos;
   - [x] Verificar se a abertura do arquivo está correta;
   - [x] Verificar se o nome do arquivo passado pelo usuário existe;
@@ -124,15 +131,21 @@ Professora: Graziela Santos de Araujo
   - [x] Ordenar o vetor de produtos;
 
 - Passo 2: Cadastrar Venda
+
   - [x] Listar produtos existentes no estoque
   - [x] Função para pegar a data e a hora da venda
-  - [ ] Receber código e quatidade de produtos que ele deseja comprar
+  - [x] Receber código e quatidade de produtos que ele deseja comprar
+  - [x] Validar se o produto existe e verificar se possui a quantidade desejada pelo usuário
+  - [x] Inserir o produto na lista encadeada
+  - [ ] Informar o preço da venda na tela
 
 - Passo 3: Listar vendas por data
+
   - [ ] ...
 
 - Passo 4: Alterar estoque e preço de produto
-    - [ ] ...
+
+  - [ ] ...
 
 - Passo 5: Remover produto do estoque
   - [ ] ...
