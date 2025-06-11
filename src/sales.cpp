@@ -16,40 +16,40 @@ void register_sale(product *products, int qty_products) {
 
   // Pega os dados do usuário
   get_data(products, qty_products, &sales);
-  
+
   printf("\n=-=-= COMPRA DE PRODUTOS =-=-=\n");
   while (!stop) {
     i++;
-    printf("Dados da compra do produto [%d]", i);
+    printf("Dados da compra do produto [%d]\n", i);
     printf("Informe o codigo do produto: ");
     scanf("%d", &code);
-    printf("Informe a quantidade do produto");
+    printf("Informe a quantidade do produto: ");
     scanf("%d", &qty);
-    
+
     // Busca o indice que o produto está no vetor de products
     index = find_product(products, code, qty_products);
 
     if (index == -1)
       printf("Produto nao encontrado.\n");
-    
-    if(qty > products[index].qty) {
+
+    if (qty > products[index].qty) {
       printf("A quatidade desejada excede o quatidade em estoque!");
-      printf("\nDeseja comprar a quatidade que tem no estoque? 1 - sim ou 2 - nao.");
+      printf("\nDeseja comprar a quatidade que tem no estoque? 1 - sim ou 2 - "
+             "nao.");
       printf("\nEscolha: ");
       scanf("%d", &op);
 
-      if(op == 1){
-        insert(products, index, lst);
-      }
+      if (op == 1)
+        insert(products, index, &lst, products[index].qty);
+    } else
+      insert(products, index, &lst, qty);
+
+    printf("\nDeseja continuar comprando? 1 - sim ou 2 - nao.\nEscolha: ");
+    scanf("%d", &choise);
+    if (choise == 2) {
+      printf("\nCompra realizada com SUCESSO.\n");
+      break;
     }
-    else {
-      insert(products, index, lst);   
-      printf("Compra realizada com SUCESSO.\n");
-    }
-    printf("Deseja continuar comprando? 1 - sim ou 2 - nao.\nEscolha: ");
-    scanf("%d\n", &choise);
-    if (choise == 2)
-      return;
   }
 }
 
@@ -64,13 +64,16 @@ void remove_product_from_stock() { printf("Entrou em 4"); };
 void opening_option(char name_arq[], int *qty_products, product **products) {
   int arq, choise; // arq = escolha do arquivo existente na pasta de tests
                    // choise = escolha da onde quer carregar o arquivo
-  printf("\n=-=-= Bem-vindo ao Sistema de Vendas do Supermercado Produtos++ =-=-=");
-  printf("\n\nO que deseja fazer:\n\t[1] - Carregar um arquivo ja existente\n\t[2] - Carregar um novo arquivo\n\tEscolha: ");
+  printf("\n=-=-= Bem-vindo ao Sistema de Vendas do Supermercado Produtos++ "
+         "=-=-=");
+  printf("\n\nO que deseja fazer:\n\t[1] - Carregar um arquivo ja "
+         "existente\n\t[2] - Carregar um novo arquivo\n\tEscolha: ");
   scanf("%d", &choise);
 
   if (choise == 1) {
     do {
-      printf("\nQual arquivo deseja carregar:\n\t[1] - 5 Produtos\n\t[2] - 20 Produtos\n\t[3] - 100 Produtos\n\tEscolha: ");
+      printf("\nQual arquivo deseja carregar:\n\t[1] - 5 Produtos\n\t[2] - 20 "
+             "Produtos\n\t[3] - 100 Produtos\n\tEscolha: ");
       scanf("%d", &arq);
 
       switch (arq) {
@@ -235,20 +238,21 @@ void format_CPF(char cpf[]) {
   strcpy(cpf, cpf_formated);
 }
 
-void insert(product *products, int index, celula *lst){
-    celula *novo;
+void insert(product *products, int index, celula **lst, int qty) {
+  celula *novo;
 
-    novo = (celula*) calloc(1, sizeof(celula));
-    novo->itens.code = products[index].code;
-    novo->itens.price = products[index].price;
-    novo->itens.qty = products[index].qty;
-    novo->prox = lst;
+  novo = (celula *)calloc(1, sizeof(celula));
+  novo->itens.code = products[index].code;
+  novo->itens.price = products[index].price;
+  novo->itens.qty = qty;
+  novo->prox = *lst;
+  *lst = novo;
 }
-
 
 int menu(int option, product *products, int qty_products) {
   printf("\n=-=-= MENU =-=-=\n");
-  printf("[1] Cadastrar venda\n[2] Listar vendas por data\n[3] Alterar estoque e preco de produto\n");
+  printf("[1] Cadastrar venda\n[2] Listar vendas por data\n[3] Alterar estoque "
+         "e preco de produto\n");
   printf("[4] Remover produto do estoque\n[5] Sair\nEscolha: ");
   scanf("%d", &option);
 

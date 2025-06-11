@@ -62,5 +62,6 @@ void list_stock_products(product *products, int qty_products);
 int find_product(product *products, int code, int qty_products);
 void get_date_hour(char date[], char hour[]);
 void format_CPF(char cpf[]);
+void insert(product *products, int index, celula **lst, int qty);
 
 int menu(int option, product *products, int qty_products);
