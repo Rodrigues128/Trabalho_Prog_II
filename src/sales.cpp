@@ -7,20 +7,16 @@
 // Features
 void register_sale(product *products, int qty_products) {
   sales_cell *sales = NULL;
-  int code, qty, op, index, choise, i = 0;
-  bool stop = false;
-  sales_cell *prox = sales->prox = NULL;
 
   // Lista todos os produtos que estão disponíveis no estoque
   list_stock_products(products, qty_products);
 
   // Cria dinamicamento o vetor de vendas e insere os dados de cada venda
-  insert_sold(&prox, products, qty_products);
+  insert_sale(&sales->prox, products, qty_products);
 }
 
 void list_sales_by_date() {
   printf("Informe a data aaaa/mm/dd: ");
-  scanf(" %[^\n]");
 }
 
 void change_product_stock_and_price() { printf("Entrou em 3"); }
@@ -217,7 +213,7 @@ void insert_itens_sold(product *products, int index, celula **lst_products,
   *lst_products = new_product;
 }
 
-void insert_sold(sales_cell **prox, product *products, int qty_products) {
+void insert_sale(sales_cell **prox, product *products, int qty_products) {
   sales_cell *new_sale;
   new_sale = (sales_cell *)calloc(1, sizeof(sales_cell));
 
