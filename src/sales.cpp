@@ -15,9 +15,7 @@ void register_sale(product *products, int qty_products) {
   insert_sale(&sales->prox, products, qty_products);
 }
 
-void list_sales_by_date() {
-  printf("Informe a data aaaa/mm/dd: ");
-}
+void list_sales_by_date() { printf("Informe a data aaaa/mm/dd: "); }
 
 void change_product_stock_and_price() { printf("Entrou em 3"); }
 
@@ -156,62 +154,14 @@ void marg_sort(int p, int r, product *products) {
 }
 
 // Functions for sales registration
-bool get_data(sale *sales) {
-  // Pegando a data e a hora atual da venda
-  get_date_hour(sales->sale_date, sales->sale_time);
-
-  printf("\nInforme o CPF (Somente numeros): ");
-  scanf(" %[^\n]", sales->CPF);
-  if (strlen(sales->CPF) != 11) {
-    get_data(sales);
-  }
-  format_CPF(sales->CPF);
-  return false;
-}
 
 void list_stock_products(product *products, int qty_products) {
   printf("\n=-=-= Lista de Produtos =-=-=\n");
   for (int i = 0; i < qty_products; i++) {
     printf("%d, %s, %.2f\n", products[i].code, products[i].name,
            products[i].price);
-  }
-}
-
-int find_product(product *products, int code, int qty_products) {
-  for (int i = 0; i < qty_products; i++)
-    if (products[i].code == code)
-      return i;
-  return -1;
-}
-
-void get_date_hour(char date[], char hour[]) {
-  time_t t;
-  struct tm *tm_info;
-
-  time(&t);                // pega o tempo atual
-  tm_info = localtime(&t); // converte para hora local
-
-  strftime(date, TAM_DATE, "%Y/%m/%d", tm_info);
-  strftime(hour, TAM_HOURS, "%H:%M:%S", tm_info);
-}
-
-void format_CPF(char cpf[]) {
-  char cpf_formated[TAM_MAX_CPF];
-  snprintf(cpf_formated, TAM_MAX_CPF, "%.3s.%.3s.%.3s-%.2s", cpf, cpf + 3,
-           cpf + 6, cpf + 9);
-  strcpy(cpf, cpf_formated);
-}
-
-void insert_itens_sold(product *products, int index, celula **lst_products,
-                       int qty) {
-  celula *new_product;
-  new_product = (celula *)calloc(1, sizeof(celula));
-  new_product->itens.code = products[index].code;
-  new_product->itens.price = products[index].price;
-  new_product->itens.qty = qty;
-  new_product->prox = *lst_products;
-  *lst_products = new_product;
-}
+  };
+};
 
 void insert_sale(sales_cell **prox, product *products, int qty_products) {
   sales_cell *new_sale;
@@ -226,7 +176,38 @@ void insert_sale(sales_cell **prox, product *products, int qty_products) {
   // Compra do produto
   buy_product(products, qty_products, &lst_products);
   purchase_value(&lst_products);
-}
+};
+
+bool get_data(sale *sales) {
+  // Pegando a data e a hora atual da venda
+  get_date_hour(sales->sale_date, sales->sale_time);
+
+  printf("\nInforme o CPF (Somente numeros): ");
+  scanf(" %[^\n]", sales->CPF);
+  if (strlen(sales->CPF) != 11) {
+    get_data(sales);
+  };
+  format_CPF(sales->CPF);
+  return false;
+};
+
+void get_date_hour(char date[], char hour[]) {
+  time_t t;
+  struct tm *tm_info;
+
+  time(&t);                // pega o tempo atual
+  tm_info = localtime(&t); // converte para hora local
+
+  strftime(date, TAM_DATE, "%Y/%m/%d", tm_info);
+  strftime(hour, TAM_HOURS, "%H:%M:%S", tm_info);
+};
+
+void format_CPF(char cpf[]) {
+  char cpf_formated[TAM_MAX_CPF];
+  snprintf(cpf_formated, TAM_MAX_CPF, "%.3s.%.3s.%.3s-%.2s", cpf, cpf + 3,
+           cpf + 6, cpf + 9);
+  strcpy(cpf, cpf_formated);
+};
 
 void buy_product(product *products, int qty_products, celula **lst_products) {
   bool stop = false;
@@ -263,16 +244,34 @@ void buy_product(product *products, int qty_products, celula **lst_products) {
     if (choise == 2) {
       printf("\nCompra realizada com SUCESSO.\n");
       break;
-    }
-  }
-}
+    };
+  };
+};
+
+int find_product(product *products, int code, int qty_products) {
+  for (int i = 0; i < qty_products; i++)
+    if (products[i].code == code)
+      return i;
+  return -1;
+};
+
+void insert_itens_sold(product *products, int index, celula **lst_products,
+                       int qty) {
+  celula *new_product;
+  new_product = (celula *)calloc(1, sizeof(celula));
+  new_product->itens.code = products[index].code;
+  new_product->itens.price = products[index].price;
+  new_product->itens.qty = qty;
+  new_product->prox = *lst_products;
+  *lst_products = new_product;
+};
 
 void purchase_value(celula **lst) {
   float soma = 0;
   for (celula *p = *lst; p != NULL; p = p->prox)
     soma += p->itens.price * p->itens.qty;
   printf("\nSoma: %.2f\n", soma);
-}
+};
 
 // Functions for listing sales by date
 
@@ -307,7 +306,7 @@ int menu(int option, product *products, int qty_products) {
   default:
     printf("Opção inválida!\n");
     break;
-  }
+  };
 
   return option;
-}
+};

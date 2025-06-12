@@ -54,22 +54,22 @@ void remove_product_from_stock();
 // Auxiliary functions
 
 // Functions for opening the file
-void open_file(char name_arq[], int *qty_products, product **products);
 void opening_option(char name_arq[], int *qty_products, product **products);
+void open_file(char name_arq[], int *qty_products, product **products);
 
 // Functions for sorting
 void marge(int p, int q, int r, product *products);
 void marg_sort(int p, int r, product *products);
 
 // Functions for sales registration
-bool get_data(sale *sales);
 void list_stock_products(product *products, int qty_products);
-int find_product(product *products, int code, int qty_products);
+void insert_sale(sales_cell **prox, product *products, int qty_products);
+bool get_data(sale *sales);
 void get_date_hour(char date[], char hour[]);
 void format_CPF(char cpf[]);
-void insert_itens_sold(product *products, int index, celula **lst, int qty);
-void insert_sale(sales_cell **prox, product *products, int qty_products);
-void purchase_value(celula **lst);
 void buy_product(product *products, int qty_products, celula **lst_products);
+int find_product(product *products, int code, int qty_products);
+void insert_itens_sold(product *products, int index, celula **lst, int qty);
+void purchase_value(celula **lst);
 
 int menu(int option, product *products, int qty_products);
