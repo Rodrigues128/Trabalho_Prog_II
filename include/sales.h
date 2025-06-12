@@ -62,7 +62,7 @@ void marge(int p, int q, int r, product *products);
 void marg_sort(int p, int r, product *products);
 
 // Functions for sales registration
-bool get_data(product *products, int qty_products, sale *sales);
+bool get_data(sale *sales);
 void list_stock_products(product *products, int qty_products);
 int find_product(product *products, int code, int qty_products);
 void get_date_hour(char date[], char hour[]);

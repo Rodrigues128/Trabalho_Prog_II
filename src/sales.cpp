@@ -6,55 +6,16 @@
 
 // Features
 void register_sale(product *products, int qty_products) {
-  sales_cell sales;
+  sales_cell *sales = NULL;
   int code, qty, op, index, choise, i = 0;
   bool stop = false;
-
-  // Inicializando a cabeça de produtos vendidos e de vendas
-  celula *lst = sales.content.itens_sold.prox = NULL;
-  sales.prox = NULL;
+  sales_cell *prox = sales->prox = NULL;
 
   // Lista todos os produtos que estão disponíveis no estoque
   list_stock_products(products, qty_products);
 
-  // Pega os dados do usuário
-  get_data(products, qty_products, &sales.content);
-
-  printf("\n=-=-= COMPRA DE PRODUTOS =-=-=\n");
-  while (!stop) {
-    i++;
-    printf("Dados da compra do produto [%d]\n", i);
-    printf("Informe o codigo do produto: ");
-    scanf("%d", &code);
-    printf("Informe a quantidade do produto: ");
-    scanf("%d", &qty);
-
-    // Busca o indice que o produto está no vetor de products
-    index = find_product(products, code, qty_products);
-
-    if (index == -1)
-      printf("Produto nao encontrado.\n");
-
-    if (qty > products[index].qty) {
-      printf("A quatidade desejada excede o quatidade em estoque!");
-      printf("\nDeseja comprar a quatidade que tem no estoque? 1 - sim ou 2 - "
-             "nao.");
-      printf("\nEscolha: ");
-      scanf("%d", &op);
-
-      if (op == 1)
-        insert_itens_sold(products, index, &lst, products[index].qty);
-    } else
-      insert_itens_sold(products, index, &lst, qty);
-
-    printf("\nDeseja continuar comprando? 1 - sim ou 2 - nao.\nEscolha: ");
-    scanf("%d", &choise);
-    if (choise == 2) {
-      printf("\nCompra realizada com SUCESSO.\n");
-      break;
-    }
-  }
-  purchase_value(&lst);
+  // Cria dinamicamento o vetor de vendas e insere os dados de cada venda
+  insert_sold(&prox, products, qty_products);
 }
 
 void list_sales_by_date() {
@@ -199,14 +160,14 @@ void marg_sort(int p, int r, product *products) {
 }
 
 // Functions for sales registration
-bool get_data(product *products, int qty_products, sale *sales) {
+bool get_data(sale *sales) {
   // Pegando a data e a hora atual da venda
   get_date_hour(sales->sale_date, sales->sale_time);
 
   printf("\nInforme o CPF (Somente numeros): ");
   scanf(" %[^\n]", sales->CPF);
   if (strlen(sales->CPF) != 11) {
-    get_data(products, qty_products, sales);
+    get_data(sales);
   }
   format_CPF(sales->CPF);
   return false;
@@ -245,18 +206,70 @@ void format_CPF(char cpf[]) {
   strcpy(cpf, cpf_formated);
 }
 
-void insert_itens_sold(product *products, int index, celula **lst, int qty) {
-  celula *novo;
-
-  novo = (celula *)calloc(1, sizeof(celula));
-  novo->itens.code = products[index].code;
-  novo->itens.price = products[index].price;
-  novo->itens.qty = qty;
-  novo->prox = *lst;
-  *lst = novo;
+void insert_itens_sold(product *products, int index, celula **lst_products,
+                       int qty) {
+  celula *new_product;
+  new_product = (celula *)calloc(1, sizeof(celula));
+  new_product->itens.code = products[index].code;
+  new_product->itens.price = products[index].price;
+  new_product->itens.qty = qty;
+  new_product->prox = *lst_products;
+  *lst_products = new_product;
 }
 
-void insert_sold() {}
+void insert_sold(sales_cell **prox, product *products, int qty_products) {
+  sales_cell *new_sale;
+  new_sale = (sales_cell *)calloc(1, sizeof(sales_cell));
+
+  // Pega os dados do usuário
+  get_data(&new_sale->content);
+
+  // Inicializando a cabeça de produtos vendidos
+  celula *lst_products = new_sale->content.itens_sold.prox = NULL;
+
+  // Compra do produto
+  buy_product(products, qty_products, &lst_products);
+  purchase_value(&lst_products);
+}
+
+void buy_product(product *products, int qty_products, celula **lst_products) {
+  bool stop = false;
+  int code, qty, choise, op, i = 0, index = -1;
+  printf("\n=-=-= COMPRA DE PRODUTOS =-=-=\n");
+  while (!stop) {
+    i++;
+    printf("Dados da compra do produto [%d]\n", i);
+    printf("Informe o codigo do produto: ");
+    scanf("%d", &code);
+    printf("Informe a quantidade do produto: ");
+    scanf("%d", &qty);
+
+    // Busca o indice que o produto está no vetor de products
+    index = find_product(products, code, qty_products);
+
+    if (index == -1)
+      printf("Produto nao encontrado.\n");
+
+    if (qty > products[index].qty) {
+      printf("A quatidade desejada excede o quatidade em estoque!");
+      printf("\nDeseja comprar a quatidade que tem no estoque? 1 - sim ou 2 - "
+             "nao.");
+      printf("\nEscolha: ");
+      scanf("%d", &op);
+
+      if (op == 1)
+        insert_itens_sold(products, index, lst_products, products[index].qty);
+    } else
+      insert_itens_sold(products, index, lst_products, qty);
+
+    printf("\nDeseja continuar comprando? 1 - sim ou 2 - nao.\nEscolha: ");
+    scanf("%d", &choise);
+    if (choise == 2) {
+      printf("\nCompra realizada com SUCESSO.\n");
+      break;
+    }
+  }
+}
 
 void purchase_value(celula **lst) {
   float soma = 0;
