@@ -6,18 +6,19 @@
 
 // Features
 void register_sale(product *products, int qty_products) {
-  sale sales;
+  sales_cell sales;
   int code, qty, op, index, choise, i = 0;
   bool stop = false;
 
-  // Inicializando a babeça de produtos vendidos
-  celula *lst = sales.itens_sold.prox = NULL;
+  // Inicializando a cabeça de produtos vendidos e de vendas
+  celula *lst = sales.content.itens_sold.prox = NULL;
+  sales.prox = NULL;
 
   // Lista todos os produtos que estão disponíveis no estoque
   list_stock_products(products, qty_products);
 
   // Pega os dados do usuário
-  get_data(products, qty_products, &sales);
+  get_data(products, qty_products, &sales.content);
 
   printf("\n=-=-= COMPRA DE PRODUTOS =-=-=\n");
   while (!stop) {
@@ -42,9 +43,9 @@ void register_sale(product *products, int qty_products) {
       scanf("%d", &op);
 
       if (op == 1)
-        insert(products, index, &lst, products[index].qty);
+        insert_itens_sold(products, index, &lst, products[index].qty);
     } else
-      insert(products, index, &lst, qty);
+      insert_itens_sold(products, index, &lst, qty);
 
     printf("\nDeseja continuar comprando? 1 - sim ou 2 - nao.\nEscolha: ");
     scanf("%d", &choise);
@@ -56,7 +57,10 @@ void register_sale(product *products, int qty_products) {
   purchase_value(&lst);
 }
 
-void list_sales_by_date() { printf("Entrou em 2"); }
+void list_sales_by_date() {
+  printf("Informe a data aaaa/mm/dd: ");
+  scanf(" %[^\n]");
+}
 
 void change_product_stock_and_price() { printf("Entrou em 3"); }
 
@@ -241,7 +245,7 @@ void format_CPF(char cpf[]) {
   strcpy(cpf, cpf_formated);
 }
 
-void insert(product *products, int index, celula **lst, int qty) {
+void insert_itens_sold(product *products, int index, celula **lst, int qty) {
   celula *novo;
 
   novo = (celula *)calloc(1, sizeof(celula));
@@ -252,15 +256,16 @@ void insert(product *products, int index, celula **lst, int qty) {
   *lst = novo;
 }
 
+void insert_sold() {}
+
 void purchase_value(celula **lst) {
   float soma = 0;
-
-  for (celula *p = *lst; p != NULL; p = p->prox) {
+  for (celula *p = *lst; p != NULL; p = p->prox)
     soma += p->itens.price * p->itens.qty;
-  }
-
   printf("\nSoma: %.2f\n", soma);
 }
+
+// Functions for listing sales by date
 
 int menu(int option, product *products, int qty_products) {
   printf("\n=-=-= MENU =-=-=\n");
