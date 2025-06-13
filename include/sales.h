@@ -45,7 +45,7 @@ struct sales_cell {
 // Features
 void register_sale(sales_cell **sales, product *products, int qty_products);
 
-void list_sales_by_date();
+void list_sales_by_date(sales_cell **sales);
 
 void change_product_stock_and_price();
 
@@ -65,7 +65,6 @@ void marg_sort(int p, int r, product *products);
 
 // Functions for sales registration
 void list_stock_products(product *products, int qty_products);
-void insert_sale(sales_cell **prox, product *products, int qty_products);
 bool get_data(sale *sales);
 void get_date_hour(char date[], char hour[]);
 void format_CPF(char cpf[]);

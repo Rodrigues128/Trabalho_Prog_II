@@ -25,12 +25,23 @@ void register_sale(sales_cell **sales, product *products, int qty_products) {
   // Calcula o valor da compra
   purchase_value(&lst_products);
 
-  // Encadeia a vendas, inserindo sempre a nova venda na primeira posição da lista 
+  // Encadeia a vendas, inserindo sempre a nova venda na primeira posição da
+  // lista
   new_sale->prox = *sales;
   *sales = new_sale;
 }
 
-void list_sales_by_date() { printf("Informe a data aaaa/mm/dd: "); }
+void list_sales_by_date(sales_cell **sales) {
+  char date[TAM_DATE];
+  printf("Informe a data aaaa/mm/dd: ");
+  scanf(" %[^\n]", date);
+
+  for (sales_cell *p = *sales; p->prox != NULL; p = p->prox) {
+    if (strcmp(p->content.sale_date, date) == 0) {
+      printf("%s\n", p->content.CPF);
+    }
+  }
+};
 
 void change_product_stock_and_price() { printf("Entrou em 3"); }
 
@@ -330,7 +341,13 @@ int menu(sales_cell **sales, product *products, int qty_products) {
     break;
 
   case 2:
-    list_sales_by_date();
+    if (sales == NULL) {
+      printf("Nenhuma venda feita até o momento!\n");
+      printf("Passou aqui!\n");
+      break;
+    }
+    list_sales_by_date(sales);
+
     break;
 
   case 3:
