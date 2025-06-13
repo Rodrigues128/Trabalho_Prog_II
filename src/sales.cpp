@@ -36,14 +36,45 @@ void list_sales_by_date(sales_cell **sales) {
   printf("Informe a data aaaa/mm/dd: ");
   scanf(" %[^\n]", date);
 
-  for (sales_cell *p = *sales; p->prox != NULL; p = p->prox) {
+  bool find = false;
+
+  for (sales_cell *p = *sales; p != NULL; p = p->prox) {
     if (strcmp(p->content.sale_date, date) == 0) {
-      printf("%s\n", p->content.CPF);
+      find = true;
+      printf("\nHora: %s\n", p->content.sale_time);
+      printf("CPF: %s\n", p->content.CPF);
+
+      float total_value = 0;
+      for (celula *item = p->content.itens_sold.prox; item != NULL;
+           item = item->prox) {
+        printf("Produto %d - Qtd: %d - Preço: %.2f\n", item->itens.code,
+               item->itens.qty, item->itens.price);
+        total_value += item->itens.price * item->itens.qty;
+      }
+      printf("Total da venda: %.2f\n", total_value);
     }
   }
+  if (!find)
+    printf(VERMELHO "Nenhuma venda encontrada para a data %s.\n" RESET, date);
 };
 
-void change_product_stock_and_price() { printf("Entrou em 3"); }
+void change_product_stock_and_price(sales_cell **sale, product *products,
+                                    int qty_products) {
+  int code, index, new_qty;
+  float new_price;
+  scanf("%d", &code);
+
+  index = find_product(products, code, qty_products);
+  if (index == -1) {
+    printf(VERMELHO "Produto nao encontrado!\n" RESET);
+    return;
+  }
+  printf("Informe o novo preço: ");
+  scanf("%f", &new_price);
+
+  printf("Informe a nova quantidade: ");
+  scanf("%d", &new_qty);
+}
 
 void remove_product_from_stock() { printf("Entrou em 4"); };
 
@@ -52,16 +83,13 @@ void remove_product_from_stock() { printf("Entrou em 4"); };
 void opening_option(char name_arq[], int *qty_products, product **products) {
   int arq, choise; // arq = escolha do arquivo existente na pasta de tests
                    // choise = escolha da onde quer carregar o arquivo
-  printf("\n=-=-= Bem-vindo ao Sistema de Vendas do Supermercado Produtos++ "
-         "=-=-=");
-  printf("\n\nO que deseja fazer:\n\t[1] - Carregar um arquivo ja "
-         "existente\n\t[2] - Carregar um novo arquivo\n\tEscolha: ");
+  print_header();
+  print_home_menu();
   scanf("%d", &choise);
 
   if (choise == 1) {
     do {
-      printf("\nQual arquivo deseja carregar:\n\t[1] - 5 Produtos\n\t[2] - 20 "
-             "Produtos\n\t[3] - 100 Produtos\n\tEscolha: ");
+      print_files_menu();
       scanf("%d", &arq);
 
       switch (arq) {
@@ -78,7 +106,8 @@ void opening_option(char name_arq[], int *qty_products, product **products) {
         break;
 
       default:
-        printf("Opcao invalida! Por favor, digite uma opcao valida [1, 3]!\n");
+        printf(VERMELHO "Opcao invalida! Por favor, digite uma opcao valida "
+                        "[1, 3]!\n" RESET);
         break;
       }
     } while (arq != 1 && arq != 2 && arq != 3);
@@ -98,7 +127,7 @@ void opening_option(char name_arq[], int *qty_products, product **products) {
     strcat(name_arq, name_arq_aux);
     open_file(name_arq, qty_products, products);
   } else {
-    printf("Opcao invalida! Insira o valor novamente [1, 2]\n");
+    printf(VERMELHO "Opcao invalida! Insira o valor novamente [1, 2]\n" RESET);
     opening_option(name_arq, qty_products, products);
   }
 }
@@ -107,14 +136,14 @@ void open_file(char name_arq[], int *qty_products, product **products) {
   FILE *p = fopen(name_arq, "r");
 
   if (p == NULL) {
-    printf("Erro na  abertura do arquivo! Tente novamente!\n");
+    printf(VERMELHO "Erro na  abertura do arquivo! Tente novamente!\n" RESET);
     opening_option(name_arq, qty_products, products);
   } else {
     fscanf(p, "%d", qty_products);
     *products = (product *)calloc(*qty_products, sizeof(product));
 
     if (products == NULL) {
-      printf("Erro ao alocar memoria!\n");
+      printf(VERMELHO "Erro ao alocar memoria!\n" RESET);
       fclose(p);
       return;
     }
@@ -124,7 +153,7 @@ void open_file(char name_arq[], int *qty_products, product **products) {
       fscanf(p, "%d", &(*products)[i].code);
       fgetc(p); // limpa o '\n' depois do número
 
-      fgets((*products)[i].name, TAM_MAX_NAME, p);
+      fgets((*products)[i].name, TAM_NAME_PRODUCT, p);
       (*products)[i].name[strcspn((*products)[i].name, "\n")] =
           '\0'; // remove '\n'
 
@@ -182,11 +211,16 @@ void marg_sort(int p, int r, product *products) {
 
 // Functions for sales registration
 void list_stock_products(product *products, int qty_products) {
-  printf("\n=-=-= Lista de Produtos =-=-=\n");
+  printf(NEGRITO "\n╔═════════════ LISTA DE PRODUTOS ════════════╗\n");
+  printf("║   ID   ║          NOME         ║   VALOR   ║\n");
+  printf("║════════════════════════════════════════════║\n" RESET);
   for (int i = 0; i < qty_products; i++) {
-    printf("%d, %s, %.2f\n", products[i].code, products[i].name,
+    char *format_name = format_product_name(products[i].name);
+    printf("║  %-5d ║  %s ║ R$ %6.2f ║\n", products[i].code, format_name,
            products[i].price);
+    free(format_name);
   };
+  printf(NEGRITO "╚════════════════════════════════════════════╝\n" RESET);
 };
 
 void insert_itens_sold(product *products, int index, celula **lst_products,
@@ -204,7 +238,7 @@ bool get_data(sale *sales) {
   // Pegando a data e a hora atual da venda
   get_date_hour(sales->sale_date, sales->sale_time);
 
-  printf("\nInforme o CPF (Somente numeros): ");
+  printf(VERDE "\nInforme o CPF" RESET VERMELHO "(Somente números): " RESET);
   scanf(" %[^\n]", sales->CPF);
   if (strlen(sales->CPF) != 11) {
     get_data(sales);
@@ -232,44 +266,65 @@ void format_CPF(char cpf[]) {
 };
 
 void buy_product(product *products, int qty_products, celula **lst_products) {
-  bool stop = false;
-  int code, qty, choise, op, i = 0, index = -1;
-  printf("\n=-=-= COMPRA DE PRODUTOS =-=-=\n");
+  bool stop = false, one_product = false;
+  int code, qty, choise, op, index = -1;
+
   while (!stop) {
-    i++;
-    printf("Dados da compra do produto [%d]\n", i);
-    printf("Informe o codigo do produto: ");
+    printf(VERDE "\n════════════════ SETOR DE COMPRA ═════════════\n");
+    printf("Informe o código do produto: " RESET);
     scanf("%d", &code);
-    printf("Informe a quantidade do produto: ");
-    scanf("%d", &qty);
 
     // Busca o indice que o produto está no vetor de products
     index = find_product(products, code, qty_products);
 
-    if (index == -1)
-      printf("Produto nao encontrado.\n");
-
-    if (qty > products[index].qty) {
-      printf("A quatidade desejada excede o quatidade em estoque!");
-      printf("\nDeseja comprar a quatidade que tem no estoque? 1 - sim ou 2 - "
-             "nao.");
-      printf("\nEscolha: ");
-      scanf("%d", &op);
-
-      if (op == 1) {
-        insert_itens_sold(products, index, lst_products, products[index].qty);
-        products[index].qty = 0;
-      }
+    if (index == -1) {
+      printf(VERMELHO "╔════════════════════════════════════════════╗\n");
+      printf("║           Produto não encontrado!          ║\n");
+      printf("╚════════════════════════════════════════════╝\n" RESET);
     } else {
-      insert_itens_sold(products, index, lst_products, qty);
-      products[index].qty -= qty;
-    }
+      one_product = true;
+      printf(VERDE "Informe a quantidade do produto: " RESET);
+      scanf("%d", &qty);
 
-    printf("\nDeseja continuar comprando? 1 - sim ou 2 - nao.\nEscolha: ");
+      if (qty > products[index].qty) {
+        printf(VERMELHO "╔════════════════════════════════════════════╗\n");
+        printf("║    Quatidade desejada excede o estoque!    ║\n");
+        printf("╚════════════════════════════════════════════╝\n" RESET);
+        printf(VERDE "╔════════════════════════════════════════════╗\n");
+        printf("║ Deseja comprar apenas oque tem no estoque? ║\n");
+        printf("║  [1] - Sim                                 ║\n");
+        printf("║  [2] - Não                                 ║\n");
+        printf("╚════════════════════════════════════════════╝\n" RESET);
+        printf(AMARELO "Escolha: " RESET);
+        scanf("%d", &op);
+
+        if (op == 1) {
+          insert_itens_sold(products, index, lst_products, products[index].qty);
+          products[index].qty = 0;
+          printf(VERDE "╔════════════════════════════════════════════╗\n");
+          printf("║        Produto comprado com SUCESSO!       ║\n");
+          printf("╚════════════════════════════════════════════╝\n" RESET);
+        };
+      } else {
+        insert_itens_sold(products, index, lst_products, qty);
+        products[index].qty -= qty;
+      };
+    };
+    printf(VERDE "╔════════════════════════════════════════════╗\n");
+    printf("║ Deseja continuar comprando?                ║\n");
+    printf("║  [1] - Sim                                 ║\n");
+    printf("║  [2] - Não                                 ║\n");
+    printf("╚════════════════════════════════════════════╝\n" RESET);
+    printf(AMARELO "Escolha: " RESET);
     scanf("%d", &choise);
 
     if (choise == 2) {
-      printf("\nCompra realizada com SUCESSO.\n");
+      if (one_product) {
+        printf(VERDE "╔════════════════════════════════════════════╗\n");
+        printf("║        Compra realizada com SUCESSO!       ║\n");
+        printf("╚════════════════════════════════════════════╝\n" RESET);
+      };
+      printf(VERDE "\n═══════════ SAIU DO SETOR DE COMPRA ══════════\n");
       break;
     };
   };
@@ -286,15 +341,16 @@ void purchase_value(celula **lst) {
   float soma = 0;
   for (celula *p = *lst; p != NULL; p = p->prox)
     soma += p->itens.price * p->itens.qty;
-  printf("\nSoma: %.2f\n", soma);
+  printf(VERDE "\nSoma: %.2f\n" RESET, soma);
 };
 
 // Functions for listing sales by date
 
 // Functions to end the program
+// Está incompleta, ainda não consegui fazer tudo
 void save_sales_to_file(sales_cell *sales) {
   if (sales == NULL) {
-    printf("Nenhuma venda para salvar.\n");
+    printf(VERMELHO "Nenhuma venda para salvar.\n" RESET);
     return;
   }
 
@@ -330,10 +386,7 @@ void save_sales_to_file(sales_cell *sales) {
 
 int menu(sales_cell **sales, product *products, int qty_products) {
   int option = 0;
-  printf("\n=-=-= MENU =-=-=\n");
-  printf("[1] Cadastrar venda\n[2] Listar vendas por data\n[3] Alterar estoque "
-         "e preco de produto\n");
-  printf("[4] Remover produto do estoque\n[5] Sair\nEscolha: ");
+  print_menu();
   scanf("%d", &option);
 
   switch (option) {
@@ -342,17 +395,11 @@ int menu(sales_cell **sales, product *products, int qty_products) {
     break;
 
   case 2:
-    if (sales == NULL) {
-      printf("Nenhuma venda feita até o momento!\n");
-      printf("Passou aqui!\n");
-      break;
-    }
     list_sales_by_date(sales);
-
     break;
 
   case 3:
-    change_product_stock_and_price();
+    change_product_stock_and_price(sales, products, qty_products);
     break;
 
   case 4:
@@ -365,9 +412,105 @@ int menu(sales_cell **sales, product *products, int qty_products) {
     break;
 
   default:
-    printf("Opção inválida!\n");
+    printf(VERMELHO "╔════════════════════════════════════════════╗\n");
+    printf("║                Opção inválida!             ║\n");
+    printf("╚════════════════════════════════════════════╝\n" RESET);
     break;
   };
 
   return option;
 };
+
+// Cabecalho
+void print_header() {
+  system("chcp 65001"); // Define UTF-8 (não é garantia, mas ajuda)
+  system("cls");
+  printf(AZUL_CLARO);
+  printf("╔════════════════════════════════════════════╗\n");
+  printf("║       SISTEMA DE VENDAS - PRODUTOS++       ║\n");
+  printf("╚════════════════════════════════════════════╝\n");
+  printf(RESET);
+}
+
+// Menu inicial
+void print_home_menu() {
+  printf(VERDE "\n╔════════════ OQUE DESEJA FAZER? ════════════╗\n" RESET);
+  printf(VERDE "║" RESET "  [1] Carregar um arquivo já existente      " VERDE
+               "║\n" RESET);
+  printf(VERDE "║" RESET "  [2] Carregar um novo arquivo              " VERDE
+               "║\n" RESET);
+  printf(VERDE "╚════════════════════════════════════════════╝\n" RESET);
+  printf(AMARELO "Escolha: " RESET);
+};
+
+// Meus arquivos
+void print_files_menu() {
+  printf(VERDE "\n╔══════ QUAL ARQUIVO DESEJA CARREGAR? ═══════╗\n");
+  printf(VERDE "║" RESET "  [1] 5 Produtos                            " VERDE
+               "║\n" RESET);
+  printf(VERDE "║" RESET "  [2] 20 Produtos                           " VERDE
+               "║\n" RESET);
+  printf(VERDE "║" RESET "  [3] 100 Produtos                          " VERDE
+               "║\n" RESET);
+  printf(VERDE "╚════════════════════════════════════════════╝\n" RESET);
+  printf(AMARELO "Escolha: " RESET);
+}
+
+// Menu principal
+void print_menu() {
+  printf(AZUL_CLARO "\n╔══════════════ MENU PRINCIPAL ══════════════╗\n" RESET);
+  printf(AZUL_CLARO "║" RESET
+                    "  [1] Cadastrar venda                       " AZUL_CLARO
+                    "║\n" RESET);
+  printf(AZUL_CLARO "║" RESET
+                    "  [2] Listar vendas por data                " AZUL_CLARO
+                    "║\n" RESET);
+  printf(AZUL_CLARO "║" RESET
+                    "  [3] Alterar estoque e preço de produto    " AZUL_CLARO
+                    "║\n" RESET);
+  printf(AZUL_CLARO "║" RESET
+                    "  [4] Remover produto do estoque            " AZUL_CLARO
+                    "║\n" RESET);
+  printf(AZUL_CLARO "║" RESET
+                    "  [5] Sair                                  " AZUL_CLARO
+                    "║\n" RESET);
+  printf(AZUL_CLARO "╚════════════════════════════════════════════╝\n" RESET);
+  printf(AMARELO "Escolha: " RESET);
+}
+int count_chars(char *str) {
+  int count = 0;
+  while (*str) {
+    char c = (char)*str;
+    if ((c & 0x80) == 0x00)
+      str += 1; // ASCII
+    else if ((c & 0xE0) == 0xC0)
+      str += 2; // 2 bytes
+    else if ((c & 0xF0) == 0xE0)
+      str += 3; // 3 bytes
+    else if ((c & 0xF8) == 0xF0)
+      str += 4; // 4 bytes
+    else
+      str += 1; // fallback
+    count++;
+  }
+  return count;
+}
+
+char *format_product_name(char *product_name) {
+  int spaces = 20 - count_chars(product_name);
+
+  if (spaces < 0)
+    spaces = 0; // evita valores negativos
+
+  int len = strlen(product_name);
+
+  char *product_name_aux = (char *)calloc(len + spaces + 1, sizeof(char));
+  if (!product_name_aux)
+    return NULL; // falha de alocação
+
+  memcpy(product_name_aux, product_name, len);
+
+  memset(product_name_aux + len, ' ', spaces);
+
+  return product_name_aux;
+}
