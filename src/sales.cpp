@@ -33,7 +33,7 @@ void register_sale(sales_cell **sales, product *products, int qty_products) {
 
 void list_sales_by_date(sales_cell **sales) {
   char date[TAM_DATE];
-  printf("Informe a data aaaa/mm/dd: ");
+  printf(VERDE "\nInforme a data aaaa/mm/dd: " RESET);
   scanf(" %[^\n]", date);
 
   bool find = false;
@@ -41,8 +41,12 @@ void list_sales_by_date(sales_cell **sales) {
   for (sales_cell *p = *sales; p != NULL; p = p->prox) {
     if (strcmp(p->content.sale_date, date) == 0) {
       find = true;
-      printf("\nHora: %s\n", p->content.sale_time);
-      printf("CPF: %s\n", p->content.CPF);
+
+      printf(VERDE "╔════════════════════════════════════════════╗\n");
+      printf("║" RESET "  Hora: %s                             " VERDE "║\n",
+             p->content.sale_time);
+      printf("║" RESET "  CPF: %s                        " VERDE "║\n" RESET,
+             p->content.CPF);
 
       float total_value = 0;
       for (celula *item = p->content.itens_sold.prox; item != NULL;
@@ -51,11 +55,15 @@ void list_sales_by_date(sales_cell **sales) {
                item->itens.qty, item->itens.price);
         total_value += item->itens.price * item->itens.qty;
       }
-      printf("Total da venda: %.2f\n", total_value);
+      printf(VERDE"║" RESET "  Total da venda: %.2f                      " VERDE "║\n",total_value);
+      printf("╚════════════════════════════════════════════╝\n" RESET);
     }
   }
-  if (!find)
-    printf(VERMELHO "Nenhuma venda encontrada para a data %s.\n" RESET, date);
+  if (!find) {
+    printf(VERMELHO "╔════════════════════════════════════════════╗\n");
+    printf("║     Nenhuma venda no dia: %s.      ║\n", date);
+    printf("╚════════════════════════════════════════════╝\n" RESET);
+  }
 };
 
 void change_product_stock_and_price(sales_cell **sale, product *products,
@@ -66,13 +74,15 @@ void change_product_stock_and_price(sales_cell **sale, product *products,
 
   index = find_product(products, code, qty_products);
   if (index == -1) {
-    printf(VERMELHO "Produto nao encontrado!\n" RESET);
+    printf(VERMELHO "╔════════════════════════════════════════════╗\n");
+    printf("║           Produto não encontrado!          ║\n");
+    printf("╚════════════════════════════════════════════╝\n" RESET);
     return;
   }
-  printf("Informe o novo preço: ");
+  printf(VERDE "Informe o novo preço: " RESET);
   scanf("%f", &new_price);
 
-  printf("Informe a nova quantidade: ");
+  printf(VERDE "Informe a nova quantidade: " RESET);
   scanf("%d", &new_qty);
 }
 
@@ -238,9 +248,12 @@ bool get_data(sale *sales) {
   // Pegando a data e a hora atual da venda
   get_date_hour(sales->sale_date, sales->sale_time);
 
-  printf(VERDE "\nInforme o CPF" RESET VERMELHO "(Somente números): " RESET);
+  printf(VERDE "\nInforme o CPF" RESET VERMELHO " (Somente números): " RESET);
   scanf(" %[^\n]", sales->CPF);
   if (strlen(sales->CPF) != 11) {
+    printf(VERMELHO "╔════════════════════════════════════════════╗\n");
+    printf("║       CPF inválido! Insira novamente.      ║\n");
+    printf("╚════════════════════════════════════════════╝\n" RESET);
     get_data(sales);
   };
   format_CPF(sales->CPF);
