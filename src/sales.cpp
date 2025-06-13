@@ -93,6 +93,7 @@ void opening_option(char name_arq[], int *qty_products, product **products) {
     fgets(name_arq_aux, TAM_NAME_ARQ, stdin);
     name_arq_aux[strcspn(name_arq_aux, "\n")] = '\0';
 
+    strcat(name_arq_aux, ".txt");
     strcpy(name_arq, "tests/");
     strcat(name_arq, name_arq_aux);
     open_file(name_arq, qty_products, products);
