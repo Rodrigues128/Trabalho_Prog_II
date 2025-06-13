@@ -12,7 +12,7 @@ void register_sale(product *products, int qty_products) {
   list_stock_products(products, qty_products);
 
   // Cria dinamicamento o vetor de vendas e insere os dados de cada venda
-  insert_sale(&sales->prox, products, qty_products);
+  insert_sale(sales->prox, products, qty_products);
 }
 
 void list_sales_by_date() { printf("Informe a data aaaa/mm/dd: "); }
@@ -163,7 +163,7 @@ void list_stock_products(product *products, int qty_products) {
   };
 };
 
-void insert_sale(sales_cell **prox, product *products, int qty_products) {
+void insert_sale(sales_cell *prox, product *products, int qty_products) {
   sales_cell *new_sale;
   new_sale = (sales_cell *)calloc(1, sizeof(sales_cell));
 
@@ -176,6 +176,7 @@ void insert_sale(sales_cell **prox, product *products, int qty_products) {
   // Compra do produto
   buy_product(products, qty_products, &lst_products);
   purchase_value(&lst_products);
+  new_sale->prox = prox;
 };
 
 bool get_data(sale *sales) {
