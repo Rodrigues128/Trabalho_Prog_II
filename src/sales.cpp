@@ -5,14 +5,29 @@
 #include <time.h>
 
 // Features
-void register_sale(product *products, int qty_products) {
-  sales_cell *sales = NULL;
-
+void register_sale(sales_cell **sales, product *products, int qty_products) {
   // Lista todos os produtos que estão disponíveis no estoque
   list_stock_products(products, qty_products);
 
   // Cria dinamicamento o vetor de vendas e insere os dados de cada venda
-  insert_sale(sales->prox, products, qty_products);
+  sales_cell *new_sale;
+  new_sale = (sales_cell *)calloc(1, sizeof(sales_cell));
+
+  // Pega os dados do usuário
+  get_data(&new_sale->content);
+
+  // Inicializando a cabeça de produtos vendidos
+  celula *lst_products = new_sale->content.itens_sold.prox = NULL;
+
+  // Preenche a lista de itens vendidos
+  buy_product(products, qty_products, &lst_products);
+
+  // Calcula o valor da compra
+  purchase_value(&lst_products);
+
+  // Encadeia a vendas, inserindo sempre a nova venda na primeira posição da lista 
+  new_sale->prox = *sales;
+  *sales = new_sale;
 }
 
 void list_sales_by_date() { printf("Informe a data aaaa/mm/dd: "); }
@@ -154,7 +169,6 @@ void marg_sort(int p, int r, product *products) {
 }
 
 // Functions for sales registration
-
 void list_stock_products(product *products, int qty_products) {
   printf("\n=-=-= Lista de Produtos =-=-=\n");
   for (int i = 0; i < qty_products; i++) {
@@ -163,20 +177,15 @@ void list_stock_products(product *products, int qty_products) {
   };
 };
 
-void insert_sale(sales_cell *prox, product *products, int qty_products) {
-  sales_cell *new_sale;
-  new_sale = (sales_cell *)calloc(1, sizeof(sales_cell));
-
-  // Pega os dados do usuário
-  get_data(&new_sale->content);
-
-  // Inicializando a cabeça de produtos vendidos
-  celula *lst_products = new_sale->content.itens_sold.prox = NULL;
-
-  // Compra do produto
-  buy_product(products, qty_products, &lst_products);
-  purchase_value(&lst_products);
-  new_sale->prox = prox;
+void insert_itens_sold(product *products, int index, celula **lst_products,
+                       int qty) {
+  celula *new_product;
+  new_product = (celula *)calloc(1, sizeof(celula));
+  new_product->itens.code = products[index].code;
+  new_product->itens.price = products[index].price;
+  new_product->itens.qty = qty;
+  new_product->prox = *lst_products;
+  *lst_products = new_product;
 };
 
 bool get_data(sale *sales) {
@@ -235,13 +244,18 @@ void buy_product(product *products, int qty_products, celula **lst_products) {
       printf("\nEscolha: ");
       scanf("%d", &op);
 
-      if (op == 1)
+      if (op == 1) {
         insert_itens_sold(products, index, lst_products, products[index].qty);
-    } else
+        products[index].qty = 0;
+      }
+    } else {
       insert_itens_sold(products, index, lst_products, qty);
+      products[index].qty -= qty;
+    }
 
     printf("\nDeseja continuar comprando? 1 - sim ou 2 - nao.\nEscolha: ");
     scanf("%d", &choise);
+
     if (choise == 2) {
       printf("\nCompra realizada com SUCESSO.\n");
       break;
@@ -256,17 +270,6 @@ int find_product(product *products, int code, int qty_products) {
   return -1;
 };
 
-void insert_itens_sold(product *products, int index, celula **lst_products,
-                       int qty) {
-  celula *new_product;
-  new_product = (celula *)calloc(1, sizeof(celula));
-  new_product->itens.code = products[index].code;
-  new_product->itens.price = products[index].price;
-  new_product->itens.qty = qty;
-  new_product->prox = *lst_products;
-  *lst_products = new_product;
-};
-
 void purchase_value(celula **lst) {
   float soma = 0;
   for (celula *p = *lst; p != NULL; p = p->prox)
@@ -276,7 +279,45 @@ void purchase_value(celula **lst) {
 
 // Functions for listing sales by date
 
-int menu(int option, product *products, int qty_products) {
+// Functions to end the program
+void save_sales_to_file(sales_cell *sales) {
+  if (sales == NULL) {
+    printf("Nenhuma venda para salvar.\n");
+    return;
+  }
+
+  // Obter a data atual para criar o nome do arquivo
+  time_t t = time(NULL);
+  struct tm *tm_info = localtime(&t);
+  char file_name[64];
+  strftime(file_name, sizeof(file_name), "vendas%d%m%Y.txt", tm_info);
+
+  FILE *fp = fopen(file_name, "w");
+  if (fp == NULL) {
+    printf("Erro ao criar o arquivo de vendas!\n");
+    return;
+  }
+
+  for (sales_cell *v = sales; v != NULL; v = v->prox) {
+    fprintf(fp, "%s\n", v->content.sale_date); // data
+    fprintf(fp, "%s\n", v->content.sale_time); // hora
+    fprintf(fp, "%s\n", v->content.CPF);       // CPF
+
+    float total = 0;
+    for (celula *p = v->content.itens_sold.prox; p != NULL; p = p->prox) {
+      fprintf(fp, "%d %d %.2f\n", p->itens.code, p->itens.qty, p->itens.price);
+      total += p->itens.qty * p->itens.price;
+    }
+
+    fprintf(fp, "%.2f\n\n", total); // total da venda
+  }
+
+  fclose(fp);
+  printf("Arquivo de vendas '%s' salvo com sucesso.\n", file_name);
+};
+
+int menu(sales_cell **sales, product *products, int qty_products) {
+  int option = 0;
   printf("\n=-=-= MENU =-=-=\n");
   printf("[1] Cadastrar venda\n[2] Listar vendas por data\n[3] Alterar estoque "
          "e preco de produto\n");
@@ -285,7 +326,7 @@ int menu(int option, product *products, int qty_products) {
 
   switch (option) {
   case 1:
-    register_sale(products, qty_products);
+    register_sale(sales, products, qty_products);
     break;
 
   case 2:
@@ -301,6 +342,7 @@ int menu(int option, product *products, int qty_products) {
     break;
 
   case 5:
+    save_sales_to_file(*sales); // Aqui salva corretamente
     printf("Saiu!\n");
     break;
 

@@ -43,13 +43,15 @@ struct sales_cell {
 // Prototypes
 
 // Features
-void register_sale(product *products, int qty_products);
+void register_sale(sales_cell **sales, product *products, int qty_products);
 
 void list_sales_by_date();
 
 void change_product_stock_and_price();
 
 void remove_product_from_stock();
+
+void save_sales_to_file(sales_cell *sales);
 
 // Auxiliary functions
 
@@ -72,4 +74,4 @@ int find_product(product *products, int code, int qty_products);
 void insert_itens_sold(product *products, int index, celula **lst, int qty);
 void purchase_value(celula **lst);
 
-int menu(int option, product *products, int qty_products);
+int menu(sales_cell **sales, product *products, int qty_products);
