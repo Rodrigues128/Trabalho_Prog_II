@@ -17,37 +17,50 @@ void register_sale(sales_cell **sales, product *products, int qty_products) {
   // Preenche a lista de itens vendidos
   buy_product(products, qty_products, &lst_products);
   new_sale->content.itens_sold.prox = lst_products;
+
+  // Verifica se um produto foi comprado
+  if (lst_products == NULL) {
+    free(new_sale);
+    return;
+  }
+
   // Calcula o valor da compra
   purchase_value(&lst_products);
 
   // Encadeia a vendas, inserindo sempre a nova venda na primeira posição da
-  // lista
   new_sale->prox = *sales;
   *sales = new_sale;
 };
 
 void list_stock_products(product *products, int qty_products) {
-  printf(BOLD "\n╔═════════════ LISTA DE PRODUTOS ════════════╗\n");
-  printf("║   ID   ║          NOME         ║   VALOR   ║\n");
-  printf("║════════════════════════════════════════════║\n" RESET);
-  for (int i = 0; i < qty_products; i++)
+  printf(BOLD
+         "\n╔══════════════════════════════════════════════════════════╗\n");
+  printf("║   ID   ║           NOME DO PRODUTO           ║   VALOR   ║\n");
+  printf(
+      "║════════║═════════════════════════════════════║═══════════║\n" RESET);
+  for (int i = 0; i < qty_products; i++) {
     printf("║  %-5d ║  %s ║ R$ %6.2f ║\n", products[i].code,
            format_product_name(products[i].name), products[i].price);
-  printf(BOLD "╚════════════════════════════════════════════╝\n" RESET);
+  };
+  printf(
+      BOLD
+      "╚══════════════════════════════════════════════════════════╝\n" RESET);
 };
 
 bool get_data(sale *sales) {
   // Pegando a data e a hora atual da venda
   get_date_hour(sales->sale_date, sales->sale_time);
 
-  printf(GREEN "\nInforme o CPF" RESET RED " (Somente números): " RESET);
-  scanf(" %[^\n]", sales->CPF);
-  if (strlen(sales->CPF) != 11) {
-    printf(RED "╔════════════════════════════════════════════╗\n");
-    printf("║       CPF inválido! Insira novamente.      ║\n");
-    printf("╚════════════════════════════════════════════╝\n" RESET);
-    get_data(sales);
-  };
+  do {
+    printf(GREEN "\nInforme o CPF" RESET RED " (Somente números): " RESET);
+    scanf(" %[^\n]", sales->CPF);
+    if (strlen(sales->CPF) != 11) {
+      printf(RED "╔════════════════════════════════════════════╗\n");
+      printf("║       CPF inválido! Insira novamente.      ║\n");
+      printf("╚════════════════════════════════════════════╝\n" RESET);
+    };
+  } while (strlen(sales->CPF) != 11);
+
   format_CPF(sales->CPF);
   return false;
 };
@@ -87,34 +100,42 @@ void buy_product(product *products, int qty_products, celula **lst_products) {
       printf("║           Produto não encontrado!          ║\n");
       printf("╚════════════════════════════════════════════╝\n" RESET);
     } else {
-      one_product = true;
-      printf(GREEN "Informe a quantidade do produto: " RESET);
-      scanf("%d", &qty);
-
-      if (qty > products[index].qty) {
+      if (products[index].qty == 0) {
         printf(RED "╔════════════════════════════════════════════╗\n");
-        printf("║    Quatidade desejada excede o estoque!    ║\n");
+        printf("║     Produto não disponível do estoque!     ║\n");
         printf("╚════════════════════════════════════════════╝\n" RESET);
-        printf(GREEN "╔════════════════════════════════════════════╗\n");
-        printf("║ Deseja comprar apenas oque tem no estoque? ║\n");
-        printf("║  [1] - Sim                                 ║\n");
-        printf("║  [2] - Não                                 ║\n");
-        printf("╚════════════════════════════════════════════╝\n" RESET);
-        printf(YELLOW "Escolha: " RESET);
-        scanf("%d", &op);
-
-        if (op == 1) {
-          insert_itens_sold(products, index, lst_products, products[index].qty);
-          products[index].qty = 0;
-          printf(GREEN "╔════════════════════════════════════════════╗\n");
-          printf("║        Produto comprado com SUCESSO!       ║\n");
-          printf("╚════════════════════════════════════════════╝\n" RESET);
-        };
       } else {
-        insert_itens_sold(products, index, lst_products, qty);
-        products[index].qty -= qty;
+        printf(GREEN "Informe a quantidade do produto: " RESET);
+        scanf("%d", &qty);
+
+        if (qty > products[index].qty) {
+          printf(RED "╔════════════════════════════════════════════╗\n");
+          printf("║    Quatidade desejada excede o estoque!    ║\n");
+          printf("╚════════════════════════════════════════════╝\n" RESET);
+          printf(GREEN "╔════════════════════════════════════════════╗\n");
+          printf("║ Deseja comprar apenas oque tem no estoque? ║\n");
+          printf("║  [1] - Sim                                 ║\n");
+          printf("║  [2] - Não                                 ║\n");
+          printf("╚════════════════════════════════════════════╝\n" RESET);
+          printf(YELLOW "Escolha: " RESET);
+          scanf("%d", &op);
+
+          if (op == 1) {
+            one_product = true;
+            insert_itens_sold(products, index, lst_products, products[index].qty);
+            products[index].qty = 0;
+            printf(GREEN "╔════════════════════════════════════════════╗\n");
+            printf("║        Produto comprado com SUCESSO!       ║\n");
+            printf("╚════════════════════════════════════════════╝\n" RESET);
+          };
+        } else {
+          one_product = true;
+          insert_itens_sold(products, index, lst_products, qty);
+          products[index].qty -= qty;
+        };
       };
     };
+
     printf(GREEN "╔════════════════════════════════════════════╗\n");
     printf("║ Deseja continuar comprando?                ║\n");
     printf("║  [1] - Sim                                 ║\n");
@@ -161,7 +182,7 @@ void purchase_value(celula **lst) {
 };
 
 char *format_product_name(char *product_name) {
-  int spaces = 20 - count_chars(product_name);
+  int spaces = 34 - count_chars(product_name);
 
   if (spaces < 0)
     spaces = 0; // evita valores negativos

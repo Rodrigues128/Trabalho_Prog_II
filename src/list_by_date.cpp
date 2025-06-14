@@ -18,9 +18,9 @@ void list_sales_by_date(sales_cell **sales) {
       }
 
       printf(GREEN "╔════════════════════════════════════════════╗\n");
-      printf("║" RESET "  Hora: %-36s " GREEN "║\n", p->content.sale_time);
+      printf("║" RESET "  Hora: %-36s" GREEN "║\n", p->content.sale_time);
       printf("║" RESET "  CPF: %-37s" GREEN "║\n", p->content.CPF);
-      printf("║" RESET "  Total da venda: R$ %-22.2f" GREEN "║\n", total_value);
+      printf("║" RESET "  Total da venda: R$ %-23.2f" GREEN  "║\n", total_value);
       printf("╚════════════════════════════════════════════╝\n" RESET);
     }
   }
