@@ -12,7 +12,8 @@ void list_sales_by_date(sales_cell **sales) {
       find = true;
 
       float total_value = 0;
-      for (celula *item = p->content.itens_sold.prox; item != NULL; item = item->prox) {
+      for (celula *item = p->content.itens_sold.prox; item != NULL;
+           item = item->prox) {
         total_value += item->itens.price * item->itens.qty;
       }
 

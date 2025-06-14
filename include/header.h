@@ -1,17 +1,16 @@
 #include <stdio.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
 // ANSI codes for colors
-#define RESET       "\033[0m"
-#define LIGHT_BLUE  "\033[1;36m"
-#define GREEN       "\033[1;32m"
-#define YELLOW     "\033[1;33m"
-#define RED    "\033[1;31m"
-#define WHITE      "\033[1;37m"
-#define BOLD     "\033[1m"
+#define RESET "\033[0m"
+#define LIGHT_BLUE "\033[1;36m"
+#define GREEN "\033[1;32m"
+#define YELLOW "\033[1;33m"
+#define RED "\033[1;31m"
+#define WHITE "\033[1;37m"
+#define BOLD "\033[1m"
 
 // Constants
 #define TAM_NAME_ARQ 50
@@ -56,7 +55,8 @@ void register_sale(sales_cell **sales, product *products, int qty_products);
 
 void list_sales_by_date(sales_cell **sales);
 
-void change_product_stock_and_price(sales_cell **sale, product *products, int qty_products);
+void change_product_stock_and_price(sales_cell **sale, product *products,
+                                    int qty_products);
 
 void remove_product_by_code(product **products, int *qty_products, int code);
 
@@ -89,3 +89,5 @@ void print_files_menu();
 void print_menu();
 char *format_product_name(char *product_name);
 int count_chars(char *str);
+
+bool was_product_sold(int code, sales_cell *sales);

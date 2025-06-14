@@ -115,7 +115,11 @@ int menu(sales_cell **sales, product *products, int qty_products) {
     int code;
     printf("Informe o código do produto a ser removido: ");
     scanf("%d", &code);
-    remove_product_by_code(&products, &qty_products, code);
+
+    if (was_product_sold(code, *sales))
+      printf(RED "Produto já foi vendido e não pode ser removido.\n" RESET);
+    else
+      remove_product_by_code(&products, &qty_products, code);
     break;
 
   case 5:

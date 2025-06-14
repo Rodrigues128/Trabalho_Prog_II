@@ -12,9 +12,8 @@ void remove_product_by_code(product **products, int *qty_products, int code) {
   }
 
   // 2. Move os elementos à frente para trás, sobrescrevendo o produto removido
-  for (int i = index; i < *qty_products - 1; i++) {
+  for (int i = index; i < *qty_products - 1; i++)
     (*products)[i] = (*products)[i + 1];
-  }
 
   // 3. Realoca o vetor para reduzir o tamanho
   product *temp =
@@ -26,5 +25,17 @@ void remove_product_by_code(product **products, int *qty_products, int code) {
     printf("Produto com código %d removido com sucesso.\n", code);
   } else {
     printf("Erro ao realocar memória após remoção.\n");
+  };
+};
+
+bool was_product_sold(int code, sales_cell *sales) {
+  for (sales_cell *venda = sales; venda != NULL; venda = venda->prox) {
+    for (celula *item = venda->content.itens_sold.prox; item != NULL;
+         item = item->prox) {
+      if (item->itens.code == code) {
+        return true; // Encontrou o produto em alguma venda
+      }
+    }
   }
+  return false; // Produto nunca foi vendido
 }
