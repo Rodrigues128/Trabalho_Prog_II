@@ -60,7 +60,10 @@ Feijão Sabiá
 ### 🔧 Compilação (com GCC):
 
 ```bash
-gcc -Wall main.cpp src/sales.cpp -o out
+g++ main.cpp src/*.cpp -Iinclude -o out.exe
+ou
+g++ .\main.cpp .\src\*.cpp -Iinclude -o out.exe
+
 ```
 
 > Certifique-se de que todos os arquivos `.cpp` e `.h` estejam no mesmo diretório ao compilar.

@@ -58,7 +58,7 @@ void list_sales_by_date(sales_cell **sales);
 
 void change_product_stock_and_price(sales_cell **sale, product *products, int qty_products);
 
-void remove_product_from_stock();
+void remove_product_by_code(product **products, int *qty_products, int code);
 
 void save_sales_to_file(sales_cell *sales);
 
