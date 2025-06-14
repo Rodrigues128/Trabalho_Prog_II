@@ -122,7 +122,8 @@ void buy_product(product *products, int qty_products, celula **lst_products) {
 
           if (op == 1) {
             one_product = true;
-            insert_itens_sold(products, index, lst_products, products[index].qty);
+            insert_itens_sold(products, index, lst_products,
+                              products[index].qty);
             products[index].qty = 0;
             printf(GREEN "╔════════════════════════════════════════════╗\n");
             printf("║        Produto comprado com SUCESSO!       ║\n");
@@ -170,6 +171,7 @@ void insert_itens_sold(product *products, int index, celula **lst_products,
   new_product->itens.code = products[index].code;
   new_product->itens.price = products[index].price;
   new_product->itens.qty = qty;
+  strcpy(new_product->itens.name, products[index].name);
   new_product->prox = *lst_products;
   *lst_products = new_product;
 };

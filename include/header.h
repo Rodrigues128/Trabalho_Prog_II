@@ -26,15 +26,9 @@ struct product {
   int qty;
 };
 
-struct product_sale {
-  int code;
-  float price;
-  int qty;
-};
-
 // Cells
 struct celula {
-  product_sale itens;
+  product itens;
   struct celula *prox;
 };
 
@@ -49,7 +43,7 @@ struct sales_cell {
   sale content;
   struct sales_cell *prox;
 };
-// Prototypes
+
 // Features
 void register_sale(sales_cell **sales, product *products, int qty_products);
 
@@ -61,6 +55,7 @@ void change_product_stock_and_price(sales_cell **sale, product *products,
 void remove_product_by_code(product **products, int *qty_products, int code);
 
 void save_sales_to_file(sales_cell *sales);
+void save_products_to_file(const char *filename, product *products, int qty_products);
 
 // Auxiliary functions:
 // Functions for opening the file
@@ -81,7 +76,8 @@ int find_product(product *products, int code, int qty_products);
 void insert_itens_sold(product *products, int index, celula **lst, int qty);
 void purchase_value(celula **lst);
 
-int menu(sales_cell **sales, product *products, int qty_products);
+int menu(sales_cell **sales, product *products, int qty_products,
+         char *name_arq);
 
 void print_header();
 void print_home_menu();

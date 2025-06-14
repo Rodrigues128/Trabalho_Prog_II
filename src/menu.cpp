@@ -56,7 +56,7 @@ void print_menu() {
   printf(YELLOW "Escolha: " RESET);
 };
 
-int menu(sales_cell **sales, product *products, int qty_products) {
+int menu(sales_cell **sales, product *products, int qty_products, char *name_arq) {
   int option = 0;
   print_menu();
   scanf("%d", &option);
@@ -86,8 +86,9 @@ int menu(sales_cell **sales, product *products, int qty_products) {
     break;
 
   case 5:
-    save_sales_to_file(*sales); // Aqui salva corretamente
-    printf("Saiu!\n");
+    save_sales_to_file(*sales);
+    save_products_to_file(name_arq, products, qty_products);
+    printf(GREEN "\nDados salvos com sucesso. Encerrando o programa...\n" RESET);
     break;
 
   default:

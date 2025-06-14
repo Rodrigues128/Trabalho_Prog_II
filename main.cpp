@@ -16,9 +16,7 @@ int main() {
   marg_sort(0, qty_products, products);
 
   do {
-    option = menu(&head_sales, products, qty_products);
+    option = menu(&head_sales, products, qty_products, name_arq);
   } while (option != 5);
-
-  // save_sales_to_file(sales); // <- salva as vendas ao final
   return 0;
 }
