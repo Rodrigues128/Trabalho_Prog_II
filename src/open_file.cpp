@@ -14,13 +14,13 @@ void opening_option(char name_arq[], int *qty_products, product **products) {
 
       switch (arq) {
       case 1:
-        strcpy(name_arq, "tests/5_produtos.txt");
+        strcpy(name_arq, "products/5_produtos.txt");
         break;
       case 2:
-        strcpy(name_arq, "tests/20_produtos.txt");
+        strcpy(name_arq, "products/20_produtos.txt");
         break;
       case 3:
-        strcpy(name_arq, "tests/100_produtos.txt");
+        strcpy(name_arq, "products/100_produtos.txt");
         break;
       default:
         printf(RED "Opcao invalida! Por favor, digite uma opcao valida [1, "
@@ -40,7 +40,7 @@ void opening_option(char name_arq[], int *qty_products, product **products) {
     fgets(name_arq_aux, TAM_NAME_ARQ, stdin);
     name_arq_aux[strcspn(name_arq_aux, "\n")] = '\0';
 
-    snprintf(name_arq, TAM_NAME_ARQ, "tests/%s.txt", name_arq_aux);
+    snprintf(name_arq, TAM_NAME_ARQ, "products/%s.txt", name_arq_aux);
 
     open_file(name_arq, qty_products, products);
   } else {

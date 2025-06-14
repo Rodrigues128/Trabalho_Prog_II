@@ -14,7 +14,7 @@ void save_sales_to_file(sales_cell *sales) {
   time_t t = time(NULL);
   struct tm *tm_info = localtime(&t);
   char file_name[64];
-  strftime(file_name, sizeof(file_name), "vendas%d%m%Y.txt", tm_info);
+  strftime(file_name, sizeof(file_name), "sales/vendas%d%m%Y.txt", tm_info);
 
   FILE *fp = fopen(file_name, "w");
   if (fp == NULL) {

@@ -112,6 +112,14 @@ Total: 129,00
 ```
 📁 include/         Headers do projeto (.h)
  ┗ 📄 header.h
+📁 products/        Arquivos de entrada
+ ├ 📄 5_produtos.txt
+ ├ 📄 20_produtos.txt
+ ┗ 📄 100_produtos.txt
+📁 sales/           Arquivos das vendas feitas. separados pela data
+ ├ 📄 data1.txt
+ ├ 📄 data2.txt
+ ┗ 📄 data3.txt
 📁 src/             Código-fonte principal (.cpp)
  ├ 📄 register_sale.cpp
  ├ 📄 open_file.cpp
@@ -119,10 +127,6 @@ Total: 129,00
  ├ 📄 change_qty_price.cpp
  ├ 📄 list_by_date.cpp
  ┗ 📄 sorting.cpp
-📁 tests/           Arquivos de entrada
- ├ 📄 5_produtos.txt
- ├ 📄 20_produtos.txt
- ┗ 📄 100_produtos.txt
 📄 main.cpp         Função principal
 📄 README.md        Documentação
 ```
