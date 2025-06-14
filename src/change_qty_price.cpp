@@ -22,5 +22,5 @@ void change_product_stock_and_price(sales_cell **sale, product *products,
   scanf("%d", &new_qty);
 
   products[index].price = new_price;
-  products[index].qty = new_qty;
+  products[index].qty += new_qty;
 };

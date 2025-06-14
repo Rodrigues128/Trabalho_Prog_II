@@ -16,7 +16,7 @@ void register_sale(sales_cell **sales, product *products, int qty_products) {
 
   // Preenche a lista de itens vendidos
   buy_product(products, qty_products, &lst_products);
-
+  new_sale->content.itens_sold.prox = lst_products;
   // Calcula o valor da compra
   purchase_value(&lst_products);
 
