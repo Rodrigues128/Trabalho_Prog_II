@@ -1,8 +1,6 @@
 #include "../include/header.h"
 
 // Salva todas as vendas em um arquivo nomeado pela data atual
-#include <locale.h>
-
 void save_sales_to_file(sales_cell *sales) {
   if (sales == NULL) {
     printf(RED "Nenhuma venda para salvar.\n" RESET);
