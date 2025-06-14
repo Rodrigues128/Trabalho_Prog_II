@@ -1,5 +1,4 @@
-#include "include/sales.h"
-#include <stdio.h>
+#include "include/header.h"
 
 int main() {
   int option = 0;

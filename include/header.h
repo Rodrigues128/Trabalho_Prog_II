@@ -1,13 +1,17 @@
 #include <stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
 // ANSI codes for colors
 #define RESET       "\033[0m"
-#define AZUL_CLARO  "\033[1;36m"
-#define VERDE       "\033[1;32m"
-#define AMARELO     "\033[1;33m"
-#define VERMELHO    "\033[1;31m"
-#define BRANCO      "\033[1;37m"
-#define NEGRITO     "\033[1m"
+#define LIGHT_BLUE  "\033[1;36m"
+#define GREEN       "\033[1;32m"
+#define YELLOW     "\033[1;33m"
+#define RED    "\033[1;31m"
+#define WHITE      "\033[1;37m"
+#define BOLD     "\033[1m"
 
 // Constants
 #define TAM_NAME_ARQ 50
@@ -28,6 +32,7 @@ struct product_sale {
   float price;
   int qty;
 };
+
 // Cells
 struct celula {
   product_sale itens;
@@ -45,17 +50,6 @@ struct sales_cell {
   sale content;
   struct sales_cell *prox;
 };
-
-// Sale type
-
-//Structs/New variable types
-// prod
-
-
-
-
-
-
 // Prototypes
 // Features
 void register_sale(sales_cell **sales, product *products, int qty_products);

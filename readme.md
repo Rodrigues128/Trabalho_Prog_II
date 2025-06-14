@@ -41,10 +41,12 @@ As vendas são armazenadas em um vetor, cada uma contendo uma **lista encadeada 
 Sabão em pó OMO
 26.00
 50
+
 2020
 Arroz Tio João
 25.00
 100
+
 3030
 Feijão Sabiá
 5.25
@@ -58,9 +60,7 @@ Feijão Sabiá
 ### 🔧 Compilação (com GCC):
 
 ```bash
-if not exist output mkdir output && gcc -Wall main.cpp src\sales.cpp -o output/out, se for no cmd
-if (!(Test-Path -Path "output")) { New-Item -ItemType Directory -Path "output" }
-gcc -Wall main.cpp src/sales.cpp -o output/out, se for no PowerShell
+gcc -Wall main.cpp src/sales.cpp -o out
 ```
 
 > Certifique-se de que todos os arquivos `.cpp` e `.h` estejam no mesmo diretório ao compilar.
@@ -68,7 +68,7 @@ gcc -Wall main.cpp src/sales.cpp -o output/out, se for no PowerShell
 ### ▶️ Execução:
 
 ```power
-./supermercado
+./out.exe
 ```
 
 Durante a execução, o programa solicitará o nome do arquivo com os dados de produtos.
@@ -119,33 +119,3 @@ Nome(s): Paulo Henrique Rodrigues Corrêa
 Disciplina: Algoritmos e Programação II
 Professora: Graziela Santos de Araujo
 ```
-
-## Tarefas
-
-- Passo 1: Receber os N dados do arquivo.
-
-  - [x] Puxar os dados do arquivo e salvar em um vetor contendo todos os produtos;
-  - [x] Verificar se a abertura do arquivo está correta;
-  - [x] Verificar se o nome do arquivo passado pelo usuário existe;
-  - [x] Verificar se o usuário quer carregar um arquivo ou digitar as entradas manualmente.
-  - [x] Ordenar o vetor de produtos;
-
-- Passo 2: Cadastrar Venda
-
-  - [x] Listar produtos existentes no estoque
-  - [x] Função para pegar a data e a hora da venda
-  - [x] Receber código e quatidade de produtos que ele deseja comprar
-  - [x] Validar se o produto existe e verificar se possui a quantidade desejada pelo usuário
-  - [x] Inserir o produto na lista encadeada
-  - [ ] Informar o preço da venda na tela
-
-- Passo 3: Listar vendas por data
-
-  - [ ] ...
-
-- Passo 4: Alterar estoque e preço de produto
-
-  - [ ] ...
-
-- Passo 5: Remover produto do estoque
-  - [ ] ...
