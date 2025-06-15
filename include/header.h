@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <locale.h>  // setlocale
+#include <direct.h>  // _mkdir
+#include <io.h>      // _access
 
 // ANSI codes for colors
 #define RESET "\033[0m"
