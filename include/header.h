@@ -80,8 +80,7 @@ int find_product(product *products, int code, int qty_products);
 void insert_itens_sold(product *products, int index, celula **lst, int qty);
 void purchase_value(celula **lst);
 
-int menu(sales_cell **sales, product *products, int qty_products,
-         char *name_arq);
+int menu(sales_cell **sales, product **products, int *qty_products, char *name_arq);
 
 void print_header();
 void print_home_menu();

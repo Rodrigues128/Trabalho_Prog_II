@@ -16,7 +16,7 @@ int main() {
   marg_sort(0, qty_products, products);
 
   do {
-    option = menu(&head_sales, products, qty_products, name_arq);
+    option = menu(&head_sales, &products, &qty_products, name_arq);
   } while (option != 5);
   return 0;
 }

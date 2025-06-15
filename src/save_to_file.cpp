@@ -50,7 +50,7 @@ void save_sales_to_file(sales_cell *sales) {
 }
 
 // Salva o vetor de produtos no arquivo de entrada original
-/*
+
 void save_products_to_file(const char *filename, product *products,
                            int qty_products) {
   FILE *fp = fopen(filename, "w");
@@ -78,4 +78,3 @@ void save_products_to_file(const char *filename, product *products,
   fclose(fp);
   printf(GREEN "Arquivo '%s' atualizado com sucesso!\n" RESET, filename);
 }
-*/
