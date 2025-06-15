@@ -59,7 +59,7 @@ void list_sales_by_date(sales_cell **sales) {
   printf(YELLOW "Escolha: " RESET);
   scanf("%d", &show_products);
 
-  char *CPF;
+  char CPF[TAM_MAX_CPF];
   if (show_products == 1) {
     get_CPF(CPF);
     format_CPF(CPF);
@@ -73,16 +73,14 @@ void list_sales_by_date(sales_cell **sales) {
     float total_value = 0;
     for (sales_cell *p = *sales; p != NULL; p = p->prox) {
       if (strcmp(CPF, p->content.CPF) == 0) {
-        printf("║  %-5d ║  %s ║ %-5d ║ R$ %6.2f ║ R$ %6.2f ║\n",
-               p->content.itens_sold.itens.code,
-               format_product_name(p->content.itens_sold.itens.name),
-               p->content.itens_sold.itens.qty,
-               p->content.itens_sold.itens.price,
-               p->content.itens_sold.itens.qty *
-                   p->content.itens_sold.itens.price);
-
-        total_value +=
-            p->content.itens_sold.itens.qty * p->content.itens_sold.itens.price;
+        for (celula *item = p->content.itens_sold.prox; item != NULL;
+             item = item->prox) {
+          printf("║  %-5d ║  %s ║ %-5d ║ R$ %6.2f ║ R$ %6.2f ║\n",
+                 item->itens.code, format_product_name(item->itens.name),
+                 item->itens.qty, item->itens.price,
+                 item->itens.qty * item->itens.price);
+          total_value += item->itens.qty * item->itens.price;
+        }
       };
     };
     printf(
