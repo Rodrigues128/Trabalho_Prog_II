@@ -42,7 +42,7 @@ void list_sales_by_date(sales_cell **sales) {
   if (!find) {
     printf(RED
            "╔══════════════════════════════════════════════════════════╗\n");
-    printf("║            Nenhuma venda no dia: %s.              ║\n", date);
+    printf("║            Nenhuma venda no dia: %s.             ║\n", date);
     printf(
         "╚══════════════════════════════════════════════════════════╝\n" RESET);
     return;
@@ -65,17 +65,17 @@ void list_sales_by_date(sales_cell **sales) {
     format_CPF(CPF);
 
     printf(BOLD "\n╔═══════════════════════════════════════════════════════════"
-                "════════════════════════╗\n");
+                "══════════════════════════╗\n");
     printf("║   ID   ║           NOME DO PRODUTO           ║   QTD   ║   VALOR "
-           "UNI.  ║   VALOR  ║\n");
+           "UNI.  ║    VALOR   ║\n");
     printf("║════════║═════════════════════════════════════║═════════║═════════"
-           "══════║══════════║\n" RESET);
+           "══════║════════════║\n" RESET);
     float total_value = 0;
     for (sales_cell *p = *sales; p != NULL; p = p->prox) {
       if (strcmp(CPF, p->content.CPF) == 0) {
         for (celula *item = p->content.itens_sold.prox; item != NULL;
              item = item->prox) {
-          printf("║  %-5d ║  %s ║ %-5d ║ R$ %6.2f ║ R$ %6.2f ║\n",
+          printf("║  %-5d ║  %s ║   %-5d ║  R$ %8.2f  ║ R$ %7.2f ║\n",
                  item->itens.code, format_product_name(item->itens.name),
                  item->itens.qty, item->itens.price,
                  item->itens.qty * item->itens.price);
@@ -85,7 +85,7 @@ void list_sales_by_date(sales_cell **sales) {
     };
     printf(
         BOLD
-        "╚══════════════════════════════════════════════════════════╝\n" RESET);
-    printf(GREEN "Total da compra: %.2f" RESET, total_value);
+        "╚═════════════════════════════════════════════════════════════════════════════════════╝\n" RESET);
+    printf(GREEN "Total da compra: %.2f\n" RESET, total_value);
   };
 };
