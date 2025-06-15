@@ -3,7 +3,9 @@
 // Salva todas as vendas em um arquivo nomeado pela data atual
 void save_sales_to_file(sales_cell *sales) {
   if (sales == NULL) {
-    printf(RED "Nenhuma venda para salvar.\n" RESET);
+    printf(RED "╔══════════════════════════════════════════════════════════╗\n");
+    printf("║                Nenhuma venda para salvar.                ║\n");
+    printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
     return;
   }
 
@@ -12,11 +14,19 @@ void save_sales_to_file(sales_cell *sales) {
   time_t t = time(NULL);
   struct tm *tm_info = localtime(&t);
   char file_name[64];
+
+  // Verifica se a pasta sales existe se existir, cria
+   if (_access("sales", 0) != 0) {
+    _mkdir("sales");
+  }
+  
   strftime(file_name, sizeof(file_name), "sales/vendas%d%m%Y.txt", tm_info);
 
   FILE *fp = fopen(file_name, "a"); // modo append
   if (fp == NULL) {
-    printf("Erro ao abrir o arquivo de vendas!\n");
+    printf(RED "╔══════════════════════════════════════════════════════════╗\n");
+    printf("║            Erro ao abrir o arquivo de vendas!            ║\n");
+    printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
     return;
   }
 
@@ -40,11 +50,14 @@ void save_sales_to_file(sales_cell *sales) {
 }
 
 // Salva o vetor de produtos no arquivo de entrada original
+/*
 void save_products_to_file(const char *filename, product *products,
                            int qty_products) {
   FILE *fp = fopen(filename, "w");
   if (fp == NULL) {
-    printf(RED "Erro ao salvar o arquivo de produtos.\n" RESET);
+    printf(RED "╔══════════════════════════════════════════════════════════╗\n");
+    printf("║          Erro ao salvar o arquivo de produtos!           ║\n");
+    printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
     return;
   }
 
@@ -65,3 +78,4 @@ void save_products_to_file(const char *filename, product *products,
   fclose(fp);
   printf(GREEN "Arquivo '%s' atualizado com sucesso!\n" RESET, filename);
 }
+*/

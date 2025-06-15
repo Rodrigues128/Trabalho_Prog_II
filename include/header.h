@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <locale.h>
 
 // ANSI codes for colors
 #define RESET "\033[0m"
@@ -60,6 +59,7 @@ void save_products_to_file(const char *filename, product *products, int qty_prod
 
 // Auxiliary functions:
 // Functions for opening the file
+void get_CPF(char *CPF);
 void opening_option(char name_arq[], int *qty_products, product **products);
 void open_file(char name_arq[], int *qty_products, product **products);
 
