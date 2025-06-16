@@ -1,7 +1,8 @@
 #include "../include/header.h"
 
 // Functions for sorting
-void marge(int p, int q, int r, product *products) {
+void marge(int p, int q, int r, product *products)
+{
   int i, j, k;
   product aux[r - p];
 
@@ -9,22 +10,28 @@ void marge(int p, int q, int r, product *products) {
   j = q;
   k = 0;
 
-  while (i < q && j < r) {
-    if (strcmp(products[i].name, products[j].name) < 0) {
+  while (i < q && j < r)
+  {
+    if (strcmp(products[i].name, products[j].name) < 0)
+    {
       aux[k] = products[i];
       i++;
-    } else {
+    }
+    else
+    {
       aux[k] = products[j];
       j++;
     }
     k++;
   };
-  while (i < q) {
+  while (i < q)
+  {
     aux[k] = products[i];
     i++;
     k++;
   };
-  while (j < r) {
+  while (j < r)
+  {
     aux[k] = products[j];
     j++;
     k++;
@@ -34,9 +41,11 @@ void marge(int p, int q, int r, product *products) {
     products[i] = aux[i - p];
 };
 
-void marg_sort(int p, int r, product *products) {
+void marg_sort(int p, int r, product *products)
+{
   int q;
-  if (p < r - 1) {
+  if (p < r - 1)
+  {
     q = (p + r) / 2;
     marg_sort(p, q, products);
     marg_sort(q, r, products);

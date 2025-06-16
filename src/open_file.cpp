@@ -1,18 +1,22 @@
 #include "../include/header.h"
 
-void opening_option(char name_arq[], int *qty_products, product **products) {
+void opening_option(char name_arq[], int *qty_products, product **products)
+{
   int arq, choise;
 
   print_header();
   print_home_menu();
   scanf("%d", &choise);
 
-  if (choise == 1) {
-    do {
+  if (choise == 1)
+  {
+    do
+    {
       print_files_menu();
       scanf("%d", &arq);
 
-      switch (arq) {
+      switch (arq)
+      {
       case 1:
         strcpy(name_arq, "products/5_produtos.txt");
         break;
@@ -31,7 +35,9 @@ void opening_option(char name_arq[], int *qty_products, product **products) {
     } while (arq < 1 || arq > 3);
 
     open_file(name_arq, qty_products, products);
-  } else if (choise == 2) {
+  }
+  else if (choise == 2)
+  {
     char name_arq_aux[TAM_NAME_ARQ];
     printf(GREEN "Informe o nome do arquivo: " RESET);
 
@@ -44,7 +50,9 @@ void opening_option(char name_arq[], int *qty_products, product **products) {
     snprintf(name_arq, TAM_NAME_ARQ, "products/%s.txt", name_arq_aux);
 
     open_file(name_arq, qty_products, products);
-  } else {
+  }
+  else
+  {
     printf(RED "╔══════════════════════════════════════════════════════════╗\n");
     printf("║     Opção inválida! Digite uma opção válida [1, 2]!      ║\n");
     printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
@@ -52,10 +60,12 @@ void opening_option(char name_arq[], int *qty_products, product **products) {
   }
 }
 
-void open_file(char name_arq[], int *qty_products, product **products) {
+void open_file(char name_arq[], int *qty_products, product **products)
+{
   FILE *p = fopen(name_arq, "r");
 
-  if (p == NULL) {
+  if (p == NULL)
+  {
     printf(RED "╔══════════════════════════════════════════════════════════╗\n");
     printf("║      Erro na abertura do arquivo! Tente novamente!       ║\n");
     printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
@@ -69,7 +79,8 @@ void open_file(char name_arq[], int *qty_products, product **products) {
 
   // Aloca o vetor
   *products = (product *)calloc(*qty_products, sizeof(product));
-  if (*products == NULL) {
+  if (*products == NULL)
+  {
     printf(RED "╔══════════════════════════════════════════════════════════╗\n");
     printf("║                 Erro ao alocar memória!                  ║\n");
     printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
@@ -78,7 +89,8 @@ void open_file(char name_arq[], int *qty_products, product **products) {
   }
 
   // Lê os produtos
-  for (int i = 0; i < *qty_products; i++) {
+  for (int i = 0; i < *qty_products; i++)
+  {
     fscanf(p, "%d", &(*products)[i].code);
     fgetc(p); // Consome '\n'
 
