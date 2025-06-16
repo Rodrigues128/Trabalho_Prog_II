@@ -33,21 +33,6 @@ void register_sale(sales_cell **sales, product *products, int qty_products) {
   *sales = new_sale;
 };
 
-void list_stock_products(product *products, int qty_products) {
-  printf(BOLD
-         "\n╔══════════════════════════════════════════════════════════╗\n");
-  printf("║   ID   ║           NOME DO PRODUTO           ║   VALOR   ║\n");
-  printf(
-      "║════════║═════════════════════════════════════║═══════════║\n" RESET);
-  for (int i = 0; i < qty_products; i++) {
-    printf("║  %-5d ║  %s ║ R$ %6.2f ║\n", products[i].code,
-           format_product_name(products[i].name), products[i].price);
-  };
-  printf(
-      BOLD
-      "╚══════════════════════════════════════════════════════════╝\n" RESET);
-};
-
 bool get_data(sale *sales) {
   // Pegando a data e a hora atual da venda
   get_date_hour(sales->sale_date, sales->sale_time);
@@ -58,20 +43,6 @@ bool get_data(sale *sales) {
   return false;
 };
 
-void get_CPF(char *CPF) {
-  do {
-    printf(GREEN "\nInforme o CPF" RESET RED " (Somente números): " RESET);
-    scanf(" %[^\n]", CPF);
-    if (strlen(CPF) != 11) {
-      printf(RED
-             "╔══════════════════════════════════════════════════════════╗\n");
-      printf("║              CPF inválido! Insira novamente.             ║\n");
-      printf("╚══════════════════════════════════════════════════════════╝"
-             "\n" RESET);
-    };
-  } while (strlen(CPF) != 11);
-}
-
 void get_date_hour(char date[], char hour[]) {
   time_t t;
   struct tm *tm_info;
@@ -81,13 +52,6 @@ void get_date_hour(char date[], char hour[]) {
 
   strftime(date, TAM_DATE, "%Y/%m/%d", tm_info);
   strftime(hour, TAM_HOURS, "%H:%M:%S", tm_info);
-};
-
-void format_CPF(char cpf[]) {
-  char cpf_formated[TAM_MAX_CPF];
-  snprintf(cpf_formated, TAM_MAX_CPF, "%.3s.%.3s.%.3s-%.2s", cpf, cpf + 3,
-           cpf + 6, cpf + 9);
-  strcpy(cpf, cpf_formated);
 };
 
 void buy_product(product *products, int qty_products, celula **lst_products) {
@@ -184,13 +148,6 @@ void buy_product(product *products, int qty_products, celula **lst_products) {
       break;
     };
   };
-};
-
-int find_product(product *products, int code, int qty_products) {
-  for (int i = 0; i < qty_products; i++)
-    if (products[i].code == code)
-      return i;
-  return -1;
 };
 
 void insert_itens_sold(product *products, int index, celula **lst_products,

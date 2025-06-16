@@ -81,12 +81,6 @@ Durante a execução, o programa solicitará o nome do arquivo com os dados de p
 
 ---
 
-## 📸 Exemplo de execução no terminal
-
-![Execução no terminal](docs/imagens/exemplo_execucao.png)
-
----
-
 ## 📁 Saída
 
 Ao finalizar o programa, serão gerados dois arquivos:

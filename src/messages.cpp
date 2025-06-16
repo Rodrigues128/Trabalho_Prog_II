@@ -1,6 +1,6 @@
 #include "../include/header.h"
 
-// Cabecalho
+// Header
 void print_header()
 {
     system("chcp 65001"); // Define o padrão UTF-8 (Para aceitar as acentuações no terminal)
@@ -12,7 +12,7 @@ void print_header()
     printf(RESET);
 }
 
-// Menu principal
+// Main menu
 void print_menu()
 {
     printf(LIGHT_BLUE "\n╔═════════════════════ MENU PRINCIPAL ═════════════════════╗\n" RESET);
@@ -25,7 +25,7 @@ void print_menu()
     printf(YELLOW "Escolha: " RESET);
 };
 
-// Menu inicial
+// Home menu
 void print_home_menu()
 {
     printf(GREEN "\n╔═══════════════════ OQUE DESEJA FAZER? ═══════════════════╗\n" RESET);
@@ -35,7 +35,7 @@ void print_home_menu()
     printf(YELLOW "Escolha: " RESET);
 };
 
-// Meus arquivos
+// My files
 void print_files_menu()
 {
     printf(GREEN "\n╔═════════════ QUAL ARQUIVO DESEJA CARREGAR? ══════════════╗\n");

@@ -22,6 +22,7 @@
 #define TAM_DATE 11 // yyyy/mm/dd + '\0'
 #define TAM_HOURS 9 // 12:51:11 + '\0
 
+// Structs
 struct product
 {
   int code;
@@ -30,7 +31,6 @@ struct product
   int qty;
 };
 
-// Cells
 struct celula
 {
   product itens;
@@ -58,15 +58,17 @@ void list_sales_by_date(sales_cell **sales);
 
 void change_product_stock_and_price(sales_cell **sale, product *products, int qty_products);
 
-void remove_product_by_code(product **products, int *qty_products, int code);
+void remove_product_by_code(product **products, int *qty_products, sales_cell *sales);
 
 void save_data(sales_cell *sales, char *filename, product *products, int qty_products);
-void save_sales_to_file(sales_cell *sales);
-void save_products_to_file(char *filename, product *products, int qty_products);
 
 // Auxiliary
 
-// User Options
+// Functions to save the sales file and update the product file
+void save_sales_to_file(sales_cell *sales);
+void save_products_to_file(char *filename, product *products, int qty_products);
+
+// Functions for User Options
 void print_header();
 void print_home_menu();
 void print_files_menu();
@@ -82,21 +84,22 @@ void marg_sort(int p, int r, product *products);
 // Functions for sales registration
 bool get_data(sale *sales);
 void get_date_hour(char date[], char hour[]);
-void format_CPF(char cpf[]);
 void buy_product(product *products, int qty_products, celula **lst_products);
-int find_product(product *products, int code, int qty_products);
 void insert_itens_sold(product *products, int index, celula **lst, int qty);
 void purchase_value(celula **lst);
-
-int menu(sales_cell **sales, product **products, int *qty_products, char *name_arq);
-
-void list_stock_products(product *products, int qty_products);
-void print_menu();
 char *format_product_name(char *product_name);
 int count_chars(char *str);
 
+// Functions for remove product
 bool was_product_sold(int code, sales_cell *sales);
 
-bool qty_equal_zero(int qty);
+// Global functions
 void get_CPF(char *CPF);
+void format_CPF(char cpf[]);
+void list_stock_products(product *products, int qty_products);
+int find_product(product *products, int code, int qty_products);
 
+// Functions for menu
+int menu(sales_cell **sales, product **products, int *qty_products, char *name_arq);
+void print_menu();
+bool qty_equal_zero(int qty);

@@ -1,5 +1,6 @@
 #include "../include/header.h"
 
+// Saves the sales file and updates the product vector
 void save_data(sales_cell *sales, char *filename, product *products, int qty_products)
 {
   save_sales_to_file(sales);
@@ -8,7 +9,8 @@ void save_data(sales_cell *sales, char *filename, product *products, int qty_pro
   printf("║    Dados salvos com sucesso. Encerrando o programa...    ║\n");
   printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
 }
-// Salva todas as vendas em um arquivo nomeado pela data atual
+
+// Save all sales to a file named by the current date
 void save_sales_to_file(sales_cell *sales)
 {
   if (sales == NULL)
@@ -63,8 +65,7 @@ void save_sales_to_file(sales_cell *sales)
   printf(GREEN "Vendas adicionadas a '%s'.\n" RESET, file_name);
 }
 
-// Salva o vetor de produtos no arquivo de entrada original
-
+// Save the product vector to the original input file
 void save_products_to_file(char *filename, product *products, int qty_products)
 {
   FILE *fp = fopen(filename, "w");

@@ -41,20 +41,7 @@ int menu(sales_cell **sales, product **products, int *qty_products, char *name_a
 
               if (qty_equal_zero(*qty_products) == false)
               {
-                     printf(GREEN "\n════════════════ REMOVER PRODUTO DO ESTOQUE ════════════════\n" RESET);
-                     int code;
-                     list_stock_products(*products, *qty_products);
-                     printf(GREEN "Informe o código do produto a ser removido: " RESET);
-                     scanf("%d", &code);
-
-                     if (was_product_sold(code, *sales))
-                     {
-                            printf(RED "╔══════════════════════════════════════════════════════════╗\n");
-                            printf("║     Produto já foi vendido e não pode ser removido!      ║\n");
-                            printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
-                     }
-                     else
-                            remove_product_by_code(products, qty_products, code);
+                     remove_product_by_code(products, qty_products, *sales);
                      break;
               }
               break;

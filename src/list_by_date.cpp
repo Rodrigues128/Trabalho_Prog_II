@@ -1,18 +1,5 @@
 #include "../include/header.h"
 
-/*
-Nova implementação:
-*- Após mostrar todas as vendas na determinada data, pergunte "deseja consultar
-a compra de alguém?" Se sim, "Qual CPF deseja consultar? " {CPF} Após informar o
-CPF, ele busca e mostra todos os produtos daquele CPF...mostrando a quantidade e
-valor de cada produto. Essa exibição será em forma de tabela. Exemplo: Lista de
-produtos do usuário
---------------------------------------
-|ID| Nome| quant.| valor  |
-| x | xxxxx |  5        |  25,00|
----------------------------------------
-Valor total: R$ 25,00
- */
 void list_sales_by_date(sales_cell **sales) {
   char date[TAM_DATE];
   printf(GREEN "\nInforme a data aaaa/mm/dd: " RESET);
@@ -29,8 +16,7 @@ void list_sales_by_date(sales_cell **sales) {
            item = item->prox) {
         total_value += item->itens.price * item->itens.qty;
       };
-      printf(GREEN
-             "╔══════════════════════════════════════════════════════════╗\n");
+      printf(GREEN"╔══════════════════════════════════════════════════════════╗\n");
       printf("║" RESET "  Hora: %-50s" GREEN "║\n", p->content.sale_time);
       printf("║" RESET "  CPF: %-51s" GREEN "║\n", p->content.CPF);
       printf("║" RESET "  Total da venda: R$ %-37.2f" GREEN "║\n", total_value);
