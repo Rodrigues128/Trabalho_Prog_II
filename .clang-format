@@ -1,9 +1,0 @@
-BraceWrapping:
-  AfterStruct: false
-  AfterClass: false
-  AfterFunction: false
-  AfterControlStatement: false
-  BeforeElse: false
-  SplitEmptyFunction: false
-  SplitEmptyRecord: false
-  SplitEmptyNamespace: false

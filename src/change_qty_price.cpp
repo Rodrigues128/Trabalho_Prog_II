@@ -1,7 +1,6 @@
 #include "../include/header.h"
 
-void change_product_stock_and_price(sales_cell **sale, product *products,
-                                    int qty_products) {
+void change_product_stock_and_price(sales_cell **sale, product *products, int qty_products) {
   int code, index, new_qty;
   float new_price;
   list_stock_products(products, qty_products);
@@ -10,11 +9,9 @@ void change_product_stock_and_price(sales_cell **sale, product *products,
 
   index = find_product(products, code, qty_products);
   if (index == -1) {
-    printf(RED
-           "╔══════════════════════════════════════════════════════════╗\n");
+    printf(RED"╔══════════════════════════════════════════════════════════╗\n");
     printf("║                 Produto não encontrado!                  ║\n");
-    printf(
-        "╚══════════════════════════════════════════════════════════╝\n" RESET);
+    printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
     return;
   }
   printf(GREEN "Informe o novo preço: R$ " RESET);

@@ -1,10 +1,10 @@
+#include <direct.h> // _mkdir
+#include <io.h>     // _access
+#include <locale.h> // setlocale
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <locale.h>  // setlocale
-#include <direct.h>  // _mkdir
-#include <io.h>      // _access
 
 // ANSI codes for colors
 #define RESET "\033[0m"
@@ -22,7 +22,8 @@
 #define TAM_DATE 11 // yyyy/mm/dd + '\0'
 #define TAM_HOURS 9 // 12:51:11 + '\0
 
-struct product {
+struct product
+{
   int code;
   char name[TAM_NAME_PRODUCT];
   float price;
@@ -30,19 +31,22 @@ struct product {
 };
 
 // Cells
-struct celula {
+struct celula
+{
   product itens;
   struct celula *prox;
 };
 
-struct sale {
+struct sale
+{
   char sale_date[TAM_DATE];
   char sale_time[TAM_HOURS];
   char CPF[TAM_MAX_CPF];
   celula itens_sold;
 };
 
-struct sales_cell {
+struct sales_cell
+{
   sale content;
   struct sales_cell *prox;
 };
@@ -52,17 +56,22 @@ void register_sale(sales_cell **sales, product *products, int qty_products);
 
 void list_sales_by_date(sales_cell **sales);
 
-void change_product_stock_and_price(sales_cell **sale, product *products,
-                                    int qty_products);
+void change_product_stock_and_price(sales_cell **sale, product *products, int qty_products);
 
 void remove_product_by_code(product **products, int *qty_products, int code);
 
+void save_data(sales_cell *sales, char *filename, product *products, int qty_products);
 void save_sales_to_file(sales_cell *sales);
-void save_products_to_file(const char *filename, product *products, int qty_products);
+void save_products_to_file(char *filename, product *products, int qty_products);
 
-// Auxiliary functions:
+// Auxiliary
+
+// User Options
+void print_header();
+void print_home_menu();
+void print_files_menu();
+
 // Functions for opening the file
-void get_CPF(char *CPF);
 void opening_option(char name_arq[], int *qty_products, product **products);
 void open_file(char name_arq[], int *qty_products, product **products);
 
@@ -71,7 +80,6 @@ void marge(int p, int q, int r, product *products);
 void marg_sort(int p, int r, product *products);
 
 // Functions for sales registration
-void list_stock_products(product *products, int qty_products);
 bool get_data(sale *sales);
 void get_date_hour(char date[], char hour[]);
 void format_CPF(char cpf[]);
@@ -82,11 +90,13 @@ void purchase_value(celula **lst);
 
 int menu(sales_cell **sales, product **products, int *qty_products, char *name_arq);
 
-void print_header();
-void print_home_menu();
-void print_files_menu();
+void list_stock_products(product *products, int qty_products);
 void print_menu();
 char *format_product_name(char *product_name);
 int count_chars(char *str);
 
 bool was_product_sold(int code, sales_cell *sales);
+
+bool qty_equal_zero(int qty);
+void get_CPF(char *CPF);
+

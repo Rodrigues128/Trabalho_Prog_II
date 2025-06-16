@@ -1,8 +1,18 @@
 #include "../include/header.h"
 
+void save_data(sales_cell *sales, char *filename, product *products, int qty_products)
+{
+  save_sales_to_file(sales);
+  save_products_to_file(filename, products, qty_products);
+  printf(GREEN "╔══════════════════════════════════════════════════════════╗\n");
+  printf("║    Dados salvos com sucesso. Encerrando o programa...    ║\n");
+  printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
+}
 // Salva todas as vendas em um arquivo nomeado pela data atual
-void save_sales_to_file(sales_cell *sales) {
-  if (sales == NULL) {
+void save_sales_to_file(sales_cell *sales)
+{
+  if (sales == NULL)
+  {
     printf(RED "╔══════════════════════════════════════════════════════════╗\n");
     printf("║                Nenhuma venda para salvar.                ║\n");
     printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
@@ -16,27 +26,31 @@ void save_sales_to_file(sales_cell *sales) {
   char file_name[64];
 
   // Verifica se a pasta sales existe se existir, cria
-   if (_access("sales", 0) != 0) {
+  if (_access("sales", 0) != 0)
+  {
     _mkdir("sales");
   }
-  
+
   strftime(file_name, sizeof(file_name), "sales/vendas%d%m%Y.txt", tm_info);
 
   FILE *fp = fopen(file_name, "a"); // modo append
-  if (fp == NULL) {
+  if (fp == NULL)
+  {
     printf(RED "╔══════════════════════════════════════════════════════════╗\n");
     printf("║            Erro ao abrir o arquivo de vendas!            ║\n");
     printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
     return;
   }
 
-  for (sales_cell *v = sales; v != NULL; v = v->prox) {
+  for (sales_cell *v = sales; v != NULL; v = v->prox)
+  {
     fprintf(fp, "%s\n", v->content.sale_date);
     fprintf(fp, "%s\n", v->content.sale_time);
     fprintf(fp, "%s\n", v->content.CPF);
 
     float total = 0;
-    for (celula *p = v->content.itens_sold.prox; p != NULL; p = p->prox) {
+    for (celula *p = v->content.itens_sold.prox; p != NULL; p = p->prox)
+    {
       fprintf(fp, "%-5d %-20s %4d %7.2f\n", p->itens.code, p->itens.name,
               p->itens.qty, p->itens.price);
       total += p->itens.qty * p->itens.price;
@@ -51,10 +65,11 @@ void save_sales_to_file(sales_cell *sales) {
 
 // Salva o vetor de produtos no arquivo de entrada original
 
-void save_products_to_file(const char *filename, product *products,
-                           int qty_products) {
+void save_products_to_file(char *filename, product *products, int qty_products)
+{
   FILE *fp = fopen(filename, "w");
-  if (fp == NULL) {
+  if (fp == NULL)
+  {
     printf(RED "╔══════════════════════════════════════════════════════════╗\n");
     printf("║          Erro ao salvar o arquivo de produtos!           ║\n");
     printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
@@ -63,14 +78,18 @@ void save_products_to_file(const char *filename, product *products,
 
   fprintf(fp, "%d\n", qty_products);
 
-  for (int i = 0; i < qty_products; i++) {
+  for (int i = 0; i < qty_products; i++)
+  {
     fprintf(fp, "%d\n", products[i].code);
     fprintf(fp, "%s\n", products[i].name);
     fprintf(fp, "%.2f\n", products[i].price);
 
-    if (i < qty_products - 1) {
+    if (i < qty_products - 1)
+    {
       fprintf(fp, "%d\n\n", products[i].qty); // Linha em branco entre produtos
-    } else {
+    }
+    else
+    {
       fprintf(fp, "%d", products[i].qty); // Último sem \n final
     }
   }

@@ -1,5 +1,6 @@
 #include "../include/header.h"
 
+
 void register_sale(sales_cell **sales, product *products, int qty_products) {
   // Lista todos os produtos que estão disponíveis no estoque
   list_stock_products(products, qty_products);
@@ -62,9 +63,11 @@ void get_CPF(char *CPF) {
     printf(GREEN "\nInforme o CPF" RESET RED " (Somente números): " RESET);
     scanf(" %[^\n]", CPF);
     if (strlen(CPF) != 11) {
-      printf(RED "╔══════════════════════════════════════════════════════════╗\n");
+      printf(RED
+             "╔══════════════════════════════════════════════════════════╗\n");
       printf("║              CPF inválido! Insira novamente.             ║\n");
-      printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
+      printf("╚══════════════════════════════════════════════════════════╝"
+             "\n" RESET);
     };
   } while (strlen(CPF) != 11);
 }
@@ -92,7 +95,8 @@ void buy_product(product *products, int qty_products, celula **lst_products) {
   int code, qty, choise, op, index = -1;
 
   while (!stop) {
-    printf(GREEN "\n═══════════════════════ SETOR DE COMPRA ════════════════════\n");
+    printf(GREEN
+           "\n═══════════════════════ SETOR DE COMPRA ════════════════════\n");
     printf("Informe o código do produto: " RESET);
     scanf("%d", &code);
 
@@ -100,14 +104,20 @@ void buy_product(product *products, int qty_products, celula **lst_products) {
     index = find_product(products, code, qty_products);
 
     if (index == -1) {
-      printf(RED "╔══════════════════════════════════════════════════════════╗\n");
+      printf(RED
+             "╔══════════════════════════════════════════════════════════╗\n");
       printf("║                  Produto não encontrado!                 ║\n");
-      printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
+      printf("╚══════════════════════════════════════════════════════════╝"
+             "\n" RESET);
     } else {
       if (products[index].qty == 0) {
-        printf(RED "╔══════════════════════════════════════════════════════════╗\n");
-        printf("║            Produto não disponível do estoque!            ║\n");
-        printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
+        printf(
+            RED
+            "╔══════════════════════════════════════════════════════════╗\n");
+        printf(
+            "║            Produto não disponível do estoque!            ║\n");
+        printf("╚══════════════════════════════════════════════════════════╝"
+               "\n" RESET);
       } else {
         printf(GREEN "Informe a quantidade do produto: " RESET);
         scanf("%d", &qty);
@@ -116,7 +126,7 @@ void buy_product(product *products, int qty_products, celula **lst_products) {
           printf(RED "╔══════════════════════════════════════════════════════════╗\n");
           printf("║           Quatidade desejada excede o estoque!           ║\n");
           printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
-      
+
           printf(GREEN "╔══════════════════════════════════════════════════════════╗\n");
           printf("║ Deseja comprar apenas oque tem no estoque?               ║\n");
           printf("║  [1] - Sim                                               ║\n");
@@ -130,27 +140,36 @@ void buy_product(product *products, int qty_products, celula **lst_products) {
             insert_itens_sold(products, index, lst_products,
                               products[index].qty);
             products[index].qty = 0;
-            printf(GREEN "╔══════════════════════════════════════════════════════════╗\n");
-            printf("║              Produto comprado com SUCESSO!               ║\n");
-            printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
+            printf(GREEN "╔════════════════════════════════════════════════════"
+                         "══════╗\n");
+            printf("║              Produto comprado com SUCESSO!               "
+                   "║\n");
+            printf("╚══════════════════════════════════════════════════════════"
+                   "╝\n" RESET);
           };
         } else {
           one_product = true;
           insert_itens_sold(products, index, lst_products, qty);
           products[index].qty -= qty;
 
-          printf(GREEN "╔══════════════════════════════════════════════════════════╗\n");
-          printf("║              Produto comprado com SUCESSO!               ║\n");
-          printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
+          printf(
+              GREEN
+              "╔══════════════════════════════════════════════════════════╗\n");
+          printf(
+              "║              Produto comprado com SUCESSO!               ║\n");
+          printf("╚══════════════════════════════════════════════════════════╝"
+                 "\n" RESET);
         };
       };
     };
 
-    printf(GREEN "╔══════════════════════════════════════════════════════════╗\n");
+    printf(GREEN
+           "╔══════════════════════════════════════════════════════════╗\n");
     printf("║ Deseja continuar comprando?                              ║\n");
     printf("║  [1] - Sim                                               ║\n");
     printf("║  [2] - Não                                               ║\n");
-    printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
+    printf(
+        "╚══════════════════════════════════════════════════════════╝\n" RESET);
     printf(YELLOW "Escolha: " RESET);
     scanf("%d", &choise);
 
@@ -159,8 +178,9 @@ void buy_product(product *products, int qty_products, celula **lst_products) {
         printf(GREEN "╔══════════════════════════════════════════════════════════╗\n");
         printf("║              Compra realizada com SUCESSO!               ║\n");
         printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
-      }; 
-      printf(GREEN "\n═════════════════ SAIU DO SETOR DE COMPRA ════════════════\n");
+      };
+      printf(GREEN
+             "\n═════════════════ SAIU DO SETOR DE COMPRA ════════════════\n");
       break;
     };
   };
