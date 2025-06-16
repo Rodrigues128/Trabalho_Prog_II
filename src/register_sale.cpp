@@ -114,15 +114,11 @@ void buy_product(product *products, int qty_products, celula **lst_products)
           if (op == 1)
           {
             one_product = true;
-            insert_itens_sold(products, index, lst_products,
-                              products[index].qty);
+            insert_itens_sold(products, index, lst_products, products[index].qty);
             products[index].qty = 0;
-            printf(GREEN "╔════════════════════════════════════════════════════"
-                         "══════╗\n");
-            printf("║              Produto comprado com SUCESSO!               "
-                   "║\n");
-            printf("╚══════════════════════════════════════════════════════════"
-                   "╝\n" RESET);
+            printf(GREEN "╔══════════════════════════════════════════════════════════╗\n");
+            printf("║              Produto comprado com SUCESSO!               ║\n");
+            printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
           };
         }
         else
@@ -131,13 +127,9 @@ void buy_product(product *products, int qty_products, celula **lst_products)
           insert_itens_sold(products, index, lst_products, qty);
           products[index].qty -= qty;
 
-          printf(
-              GREEN
-              "╔══════════════════════════════════════════════════════════╗\n");
-          printf(
-              "║              Produto comprado com SUCESSO!               ║\n");
-          printf("╚══════════════════════════════════════════════════════════╝"
-                 "\n" RESET);
+          printf(GREEN "╔══════════════════════════════════════════════════════════╗\n");
+          printf("║              Produto comprado com SUCESSO!               ║\n");
+          printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
         };
       };
     };
@@ -147,8 +139,7 @@ void buy_product(product *products, int qty_products, celula **lst_products)
     printf("║ Deseja continuar comprando?                              ║\n");
     printf("║  [1] - Sim                                               ║\n");
     printf("║  [2] - Não                                               ║\n");
-    printf(
-        "╚══════════════════════════════════════════════════════════╝\n" RESET);
+    printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
     printf(YELLOW "Escolha: " RESET);
     scanf("%d", &choise);
 
@@ -160,15 +151,13 @@ void buy_product(product *products, int qty_products, celula **lst_products)
         printf("║              Compra realizada com SUCESSO!               ║\n");
         printf("╚══════════════════════════════════════════════════════════╝\n" RESET);
       };
-      printf(GREEN
-             "\n═════════════════ SAIU DO SETOR DE COMPRA ════════════════\n");
+      printf(GREEN "\n═════════════════ SAIU DO SETOR DE COMPRA ════════════════\n");
       break;
     };
   };
 };
 
-void insert_itens_sold(product *products, int index, celula **lst_products,
-                       int qty)
+void insert_itens_sold(product *products, int index, celula **lst_products, int qty)
 {
   celula *new_product;
   new_product = (celula *)calloc(1, sizeof(celula));

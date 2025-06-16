@@ -58,7 +58,7 @@ void save_sales_to_file(sales_cell *sales)
       total += p->itens.qty * p->itens.price;
     }
 
-    fprintf(fp, "%.2f\n\n", total); // ✅ sempre imprime duas \n após total
+    fprintf(fp, "%.2f\n\n", total);
   }
 
   fclose(fp);

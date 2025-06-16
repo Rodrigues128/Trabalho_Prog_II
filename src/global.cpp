@@ -35,17 +35,12 @@ int find_product(product *products, int code, int qty_products)
 
 void list_stock_products(product *products, int qty_products)
 {
-  printf(BOLD
-         "\n╔══════════════════════════════════════════════════════════╗\n");
+  printf(BOLD "\n╔══════════════════════════════════════════════════════════╗\n");
   printf("║   ID   ║           NOME DO PRODUTO           ║   VALOR   ║\n");
-  printf(
-      "║════════║═════════════════════════════════════║═══════════║\n" RESET);
+  printf("║════════║═════════════════════════════════════║═══════════║\n" RESET);
   for (int i = 0; i < qty_products; i++)
   {
-    printf("║  %-5d ║  %s ║ R$ %6.2f ║\n", products[i].code,
-           format_product_name(products[i].name), products[i].price);
+    printf("║  %-5d ║  %s ║ R$ %6.2f ║\n", products[i].code, format_product_name(products[i].name), products[i].price);
   };
-  printf(
-      BOLD
-      "╚══════════════════════════════════════════════════════════╝\n" RESET);
+  printf(BOLD "╚══════════════════════════════════════════════════════════╝\n" RESET);
 };
