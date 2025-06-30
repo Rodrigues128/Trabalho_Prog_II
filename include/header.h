@@ -1,6 +1,22 @@
-#include <direct.h> // _mkdir
-#include <io.h>     // _access
-#include <locale.h> // setlocale
+#ifndef HEADER_H
+#define HEADER_H
+
+#ifdef _WIN32
+    #include <direct.h>
+    #include <io.h>
+    #define MKDIR(path) _mkdir(path)
+    #define ACCESS(path, mode) _access(path, mode)
+    #define CLEAR_SCREEN "cls"
+    #define F_OK 0
+#else
+    #include <sys/stat.h>
+    #include <unistd.h>
+    #define MKDIR(path) mkdir(path, 0755)
+    #define ACCESS(path, mode) access(path, mode)
+    #define CLEAR_SCREEN "clear"
+#endif
+
+#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,7 +36,7 @@
 #define TAM_NAME_PRODUCT 50
 #define TAM_MAX_CPF 15
 #define TAM_DATE 11 // yyyy/mm/dd + '\0'
-#define TAM_HOURS 9 // 12:51:11 + '\0
+#define TAM_HOURS 9 // hh:mm:ss + '\0'
 
 // Structs
 struct product
@@ -53,35 +69,21 @@ struct sales_cell
 
 // Features
 void register_sale(sales_cell **sales, product *products, int qty_products);
-
 void list_sales_by_date(sales_cell **sales);
-
 void change_product_stock_and_price(sales_cell **sale, product *products, int qty_products);
-
 void remove_product_by_code(product **products, int *qty_products, sales_cell *sales);
-
 void save_data(sales_cell *sales, char *filename, product *products, int qty_products);
 
 // Auxiliary
-
-// Functions to save the sales file and update the product file
 void save_sales_to_file(sales_cell *sales);
 void save_products_to_file(char *filename, product *products, int qty_products);
-
-// Functions for User Options
 void print_header();
 void print_home_menu();
 void print_files_menu();
-
-// Functions for opening the file
 void opening_option(char name_arq[], int *qty_products, product **products);
 void open_file(char name_arq[], int *qty_products, product **products);
-
-// Functions for sorting
 void marge(int p, int q, int r, product *products);
 void marg_sort(int p, int r, product *products);
-
-// Functions for sales registration
 bool get_data(sale *sales);
 void get_date_hour(char date[], char hour[]);
 void buy_product(product *products, int qty_products, celula **lst_products);
@@ -89,17 +91,13 @@ void insert_itens_sold(product *products, int index, celula **lst, int qty);
 void purchase_value(celula **lst);
 char *format_product_name(char *product_name);
 int count_chars(char *str);
-
-// Functions for remove product
 bool was_product_sold(int code, sales_cell *sales);
-
-// Global functions
 void get_CPF(char *CPF);
 void format_CPF(char cpf[]);
 void list_stock_products(product *products, int qty_products);
 int find_product(product *products, int code, int qty_products);
-
-// Functions for menu
 int menu(sales_cell **sales, product **products, int *qty_products, char *name_arq);
 void print_menu();
 bool qty_equal_zero(int qty);
+
+#endif // HEADER_H

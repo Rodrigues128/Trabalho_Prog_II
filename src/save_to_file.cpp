@@ -27,10 +27,10 @@ void save_sales_to_file(sales_cell *sales)
   struct tm *tm_info = localtime(&t);
   char file_name[64];
 
-  // Verifica se a pasta sales existe se existir, cria
-  if (_access("sales", 0) != 0)
+  // Verifica se a pasta sales existe; se não existir, cria
+  if (ACCESS("sales", F_OK) != 0)
   {
-    _mkdir("sales");
+    MKDIR("sales");
   }
 
   strftime(file_name, sizeof(file_name), "sales/vendas%d%m%Y.txt", tm_info);

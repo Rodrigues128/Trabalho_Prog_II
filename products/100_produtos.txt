@@ -1,500 +1,500 @@
 100
-1001
-Arroz Branco
-5.20
-150
-
-1002
-Feijão Carioca
-7.80
-120
-
-1003
-Açúcar Refinado
-4.10
-200
-
-1004
-Óleo de Soja
-8.50
-180
-
-1005
-Café Solúvel
-12.00
-100
-
-1006
-Leite Condensado
-6.20
-80
-
-1007
-Creme de Leite
-3.50
-90
-
-1008
-Macarrão Parafuso
-3.00
-170
-
-1009
-Molho de Tomate Tradicional
-2.50
-190
-
-1010
-Biscoito Maisena
-2.80
-110
-
-1011
-Sabão em Pó
-15.00
-70
-
-1012
-Amaciante Concentrado
-9.00
-60
-
-1013
-Detergente Líquido
-2.10
-210
-
-1014
-Água Sanitária
-3.20
-140
-
-1015
-Papel Higiênico Folha Dupla
-10.50
-50
-
-1016
-Shampoo Hidratante
-18.00
-40
-
-1017
-Condicionador Reparador
-17.50
-35
-
-1018
-Sabonete Líquido
-7.00
-130
-
-1019
-Creme Dental Flúor
-4.00
-160
-
-1020
-Escova de Dente Média
-3.80
-100
-
-1021
-Pão Francês Congelado
-0.80
-300
-
-1022
-Manteiga com Sal
-10.00
-75
-
-1023
-Requeijão Cremoso
-8.00
-95
-
-1024
-Queijo Mussarela Fatiado
-22.00
-50
-
-1025
-Presunto Cozido Fatiado
-18.00
-45
-
-1026
-Iogurte Natural
-4.50
-125
-
-1027
-Leite Integral UHT
-5.50
-160
-
-1028
-Ovos Brancos Grandes
-13.00
-80
-
-1029
-Frango Congelado Inteiro
-15.00
-60
-
-1030
-Carne Moída Patinho
-28.00
-40
-
-1031
-Salsicha Hot Dog
-9.50
-115
-
-1032
-Linguiça Toscana
-14.00
-90
-
-1033
-Peito de Peru Defumado
-25.00
-30
-
-1034
-Pão de Forma Tradicional
-6.00
-85
-
-1035
-Geleia de Morango
-7.50
-105
-
-1036
-Mel Puro
-20.00
-25
-
-1037
-Cereal Matinal Chocolate
-11.00
-55
-
-1038
-Achocolatado em Pó
-7.00
-135
-
-1039
-Suco de Laranja Concentrado
-6.50
-98
-
-1040
-Refrigerante Cola 2L
-7.00
-70
-
-1041
-Cerveja Lager Lata
-4.00
-180
-
-1042
-Vinho Tinto Suave
-25.00
-20
-
-1043
-Azeite Extra Virgem
-30.00
-15
-
-1044
-Vinagre de Álcool
-3.00
-165
-
-1045
-Sal Refinado
-1.50
-250
-
-1046
-Pimenta do Reino Moída
-6.00
-70
-
-1047
-Alho Descascado
-8.00
-90
-
-1048
-Cebola Branca
-4.00
-110
-
-1049
-Batata Inglesa
-5.00
-130
-
-1050
-Tomate Débora
-6.00
-140
-
-1051
-Cenoura Fresca
-3.50
-155
-
-1052
-Alface Crespa
-3.00
-100
-
-1053
-Banana Prata
-7.00
-120
-
-1054
-Maçã Fuji
-9.00
-100
-
-1055
-Laranja Pera
-5.00
-145
-
-1056
-Limão Taiti
-3.00
-160
-
-1057
-Uva Thompson Sem Semente
-15.00
-60
-
-1058
-Melancia Inteira
-12.00
-20
-
-1059
-Mamão Formosa
-8.00
-40
-
 1060
 Abacate Madura
 6.00
 50
-
-1061
-Café Torrado e Moído
-10.00
-170
-
-1062
-Farinha de Trigo Tradicional
-5.00
-190
-
-1063
-Fermento em Pó Químico
-3.00
-100
-
-1064
-Chocolate em Barra Meio Amargo
-8.00
-70
-
-1065
-Coco Ralado Úmido e Adoçado
-4.00
-120
-
-1066
-Leite de Coco
-6.00
-80
-
-1067
-Gelatina em Pó Morango
-2.00
-150
-
-1068
-Creme de Milho
-3.00
-130
-
-1069
-Milho Verde em Conserva
-3.50
-140
-
-1070
-Ervilha em Conserva
-3.20
-135
-
-1071
-Seleta de Legumes em Conserva
-4.00
-110
-
-1072
-Atum Sólido em Óleo
-9.00
-60
-
-1073
-Sardinha em Óleo Comestível
-5.00
-90
-
-1074
-Azeitona Verde Fatiada
-6.00
-85
-
-1075
-Palmito Picado
-12.00
-40
-
-1076
-Arroz Parboilizado
-5.50
-140
-
-1077
-Feijão Preto
-8.00
-110
-
-1078
-Sal Grosso
-2.00
-200
-
-1079
-Bicarbonato de Sódio
-2.50
-90
-
-1080
-Maionese Tradicional
-7.00
-100
-
-1081
-Catchup Tradicional
-5.00
-130
-
-1082
-Mostarda Amarela
-4.00
-120
-
-1083
-Adoçante Líquido
-10.00
-50
-
-1084
-Chá Preto Sachê
-6.00
-80
-
-1085
-Biscoito Salgado Cream Cracker
-3.50
-110
-
-1086
-Torradas Tradicionais
-5.00
-70
-
-1087
-Cereal em Barra Frutas Vermelhas
-4.50
-60
-
-1088
-Água Mineral Sem Gás 1.5L
-2.50
-150
-
-1089
-Gelo em Cubos
-5.00
-30
-
-1090
-Carvão Vegetal
-15.00
-20
 
 1091
 Acendedor de Churrasqueira
 8.00
 25
 
-1092
-Fósforo de Segurança
-1.00
-180
+1038
+Achocolatado em Pó
+7.00
+135
 
-1093
-Vassoura de Piaçava
-15.00
-10
+1083
+Adoçante Líquido
+10.00
+50
 
-1094
-Rodo de Limpeza
-12.00
+1052
+Alface Crespa
+3.00
+100
+
+1047
+Alho Descascado
+8.00
+90
+
+1012
+Amaciante Concentrado
+9.00
+60
+
+1001
+Arroz Branco
+5.20
+150
+
+1076
+Arroz Parboilizado
+5.50
+140
+
+1072
+Atum Sólido em Óleo
+9.00
+60
+
+1043
+Azeite Extra Virgem
+30.00
 15
 
-1095
-Pano de Chão Microfibra
+1074
+Azeitona Verde Fatiada
+6.00
+85
+
+1003
+Açúcar Refinado
+4.10
+200
+
+1053
+Banana Prata
 7.00
-30
+120
+
+1049
+Batata Inglesa
+5.00
+130
+
+1079
+Bicarbonato de Sódio
+2.50
+90
+
+1010
+Biscoito Maisena
+2.80
+110
+
+1085
+Biscoito Salgado Cream Cracker
+3.50
+110
+
+1005
+Café Solúvel
+12.00
+100
+
+1061
+Café Torrado e Moído
+10.00
+170
+
+1030
+Carne Moída Patinho
+28.00
+40
+
+1090
+Carvão Vegetal
+15.00
+20
+
+1081
+Catchup Tradicional
+5.00
+130
+
+1048
+Cebola Branca
+4.00
+110
+
+1051
+Cenoura Fresca
+3.50
+155
+
+1037
+Cereal Matinal Chocolate
+11.00
+55
+
+1087
+Cereal em Barra Frutas Vermelhas
+4.50
+60
+
+1041
+Cerveja Lager Lata
+4.00
+180
+
+1064
+Chocolate em Barra Meio Amargo
+8.00
+70
+
+1084
+Chá Preto Sachê
+6.00
+80
+
+1065
+Coco Ralado Úmido e Adoçado
+4.00
+120
+
+1017
+Condicionador Reparador
+17.50
+35
+
+1019
+Creme Dental Flúor
+4.00
+160
+
+1007
+Creme de Leite
+3.50
+90
+
+1068
+Creme de Milho
+3.00
+130
+
+1013
+Detergente Líquido
+2.10
+210
+
+1070
+Ervilha em Conserva
+3.20
+135
+
+1020
+Escova de Dente Média
+3.80
+100
 
 1096
 Esponja Multiuso
 2.00
 100
 
+1062
+Farinha de Trigo Tradicional
+5.00
+190
+
+1002
+Feijão Carioca
+7.80
+120
+
+1077
+Feijão Preto
+8.00
+110
+
+1063
+Fermento em Pó Químico
+3.00
+100
+
+1029
+Frango Congelado Inteiro
+15.00
+60
+
+1092
+Fósforo de Segurança
+1.00
+180
+
+1067
+Gelatina em Pó Morango
+2.00
+150
+
+1035
+Geleia de Morango
+7.50
+105
+
+1089
+Gelo em Cubos
+5.00
+30
+
+1026
+Iogurte Natural
+4.50
+125
+
+1055
+Laranja Pera
+5.00
+145
+
+1006
+Leite Condensado
+6.20
+80
+
+1027
+Leite Integral UHT
+5.50
+160
+
+1066
+Leite de Coco
+6.00
+80
+
+1056
+Limão Taiti
+3.00
+160
+
+1032
+Linguiça Toscana
+14.00
+90
+
 1097
 Luvas de Borracha Média
 5.00
-40
-
-1098
-Saco de Lixo 50L
-8.00
-60
-
-1099
-Pilhas Alcalinas AA
-10.00
 40
 
 1100
 Lâmpada LED Econômica
 12.00
 25
+
+1008
+Macarrão Parafuso
+3.00
+170
+
+1080
+Maionese Tradicional
+7.00
+100
+
+1059
+Mamão Formosa
+8.00
+40
+
+1022
+Manteiga com Sal
+10.00
+75
+
+1054
+Maçã Fuji
+9.00
+100
+
+1036
+Mel Puro
+20.00
+25
+
+1058
+Melancia Inteira
+12.00
+20
+
+1069
+Milho Verde em Conserva
+3.50
+140
+
+1009
+Molho de Tomate Tradicional
+2.50
+190
+
+1082
+Mostarda Amarela
+4.00
+120
+
+1028
+Ovos Brancos Grandes
+13.00
+80
+
+1075
+Palmito Picado
+12.00
+40
+
+1095
+Pano de Chão Microfibra
+7.00
+30
+
+1015
+Papel Higiênico Folha Dupla
+10.50
+50
+
+1033
+Peito de Peru Defumado
+25.00
+30
+
+1099
+Pilhas Alcalinas AA
+10.00
+40
+
+1046
+Pimenta do Reino Moída
+6.00
+70
+
+1025
+Presunto Cozido Fatiado
+18.00
+45
+
+1021
+Pão Francês Congelado
+0.80
+300
+
+1034
+Pão de Forma Tradicional
+6.00
+85
+
+1024
+Queijo Mussarela Fatiado
+22.00
+50
+
+1040
+Refrigerante Cola 2L
+7.00
+70
+
+1023
+Requeijão Cremoso
+8.00
+95
+
+1094
+Rodo de Limpeza
+12.00
+15
+
+1018
+Sabonete Líquido
+7.00
+130
+
+1011
+Sabão em Pó
+15.00
+70
+
+1098
+Saco de Lixo 50L
+8.00
+60
+
+1078
+Sal Grosso
+2.00
+200
+
+1045
+Sal Refinado
+1.50
+250
+
+1031
+Salsicha Hot Dog
+9.50
+115
+
+1073
+Sardinha em Óleo Comestível
+5.00
+90
+
+1071
+Seleta de Legumes em Conserva
+4.00
+110
+
+1016
+Shampoo Hidratante
+18.00
+40
+
+1039
+Suco de Laranja Concentrado
+6.50
+98
+
+1050
+Tomate Débora
+6.00
+140
+
+1086
+Torradas Tradicionais
+5.00
+70
+
+1057
+Uva Thompson Sem Semente
+15.00
+60
+
+1093
+Vassoura de Piaçava
+15.00
+10
+
+1044
+Vinagre de Álcool
+3.00
+165
+
+1042
+Vinho Tinto Suave
+25.00
+20
+
+1088
+Água Mineral Sem Gás 1.5L
+2.50
+150
+
+1014
+Água Sanitária
+3.20
+140
+
+1004
+Óleo de Soja
+8.50
+125

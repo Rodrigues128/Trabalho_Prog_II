@@ -85,7 +85,7 @@ Durante a execução, o programa solicitará o nome do arquivo com os dados de p
 
 Ao finalizar o programa, serão gerados dois arquivos:
 
-- `produtos.txt` (atualizado com novas quantidades e preços) ❗ *(se implementado)*
+- `produtos.txt` (atualizado com novas quantidades e preços)
 - `vendasDDMMYYYY.txt` (com os dados das vendas do dia, formatados conforme abaixo)
 
 ### Exemplo de saída `vendas12052025.txt`:

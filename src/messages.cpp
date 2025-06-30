@@ -3,8 +3,11 @@
 // Header
 void print_header()
 {
-    system("chcp 65001"); // Define o padrão UTF-8 (Para aceitar as acentuações no terminal)
-    system("cls");
+#ifdef _WIN32
+    system("chcp 65001 > nul"); // Define o terminal para UTF-8 no Windows
+#endif
+    system(CLEAR_SCREEN);       // Limpa a tela conforme o sistema operacional
+
     printf(LIGHT_BLUE);
     printf("╔══════════════════════════════════════════════════════════╗\n");
     printf("║               SISTEMA DE VENDAS - PRODUTOS++             ║\n");
@@ -23,17 +26,17 @@ void print_menu()
     printf(LIGHT_BLUE "║" RESET "  [5] Sair                                                " LIGHT_BLUE "║\n" RESET);
     printf(LIGHT_BLUE "╚══════════════════════════════════════════════════════════╝\n" RESET);
     printf(YELLOW "Escolha: " RESET);
-};
+}
 
 // Home menu
 void print_home_menu()
 {
-    printf(GREEN "\n╔═══════════════════ OQUE DESEJA FAZER? ═══════════════════╗\n" RESET);
+    printf(GREEN "\n╔═══════════════════ O QUE DESEJA FAZER? ══════════════════╗\n" RESET);
     printf(GREEN "║" RESET "  [1] Carregar um arquivo já existente                    " GREEN "║\n" RESET);
     printf(GREEN "║" RESET "  [2] Carregar um novo arquivo                            " GREEN "║\n" RESET);
     printf(GREEN "╚══════════════════════════════════════════════════════════╝\n" RESET);
     printf(YELLOW "Escolha: " RESET);
-};
+}
 
 // My files
 void print_files_menu()
